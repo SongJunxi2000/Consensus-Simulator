@@ -1,7 +1,4 @@
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.ListIterator;
-import java.util.Random;
+import java.util.*;
 
 public class Simulation_engine {
     public int numOfPlyaers, numOfFaultyPlayers, delay, maxRound;
@@ -29,20 +26,11 @@ public class Simulation_engine {
         HashMap<Integer, LinkedList<Message>> ready_messages;// key is the receiver
         LinkedList<Message> unready_message;
 
-        private void checkReady(Message msg){
-            msg.readyForDelivery = Adversary.deliverPermission(msg);
-            if(msg.readyForDelivery){
-                ready_messages.get(msg.sender).add(msg);
-            }
-            else{
-                unready_message.add(msg);
-            }
-        }
         public void send(Message msg, int player_key){
             if(players_key[msg.sender]!= player_key) return;
             msg.sendRound = roundNumber;
             msg = Fsign.sign(msg);
-            checkReady(msg);
+            unready_message.add(msg);
         }
 
         public LinkedList<Message> receive(int key, int id){
@@ -54,28 +42,22 @@ public class Simulation_engine {
             ListIterator<Message> iterator = unready_message.listIterator();
             while(iterator.hasNext()){
                 Message msg = iterator.next();
-                msg.readyForDelivery = Adversary.deliverPermission(msg);
-                if(msg.readyForDelivery) {
-                    ready_messages.get(msg.sender).add(msg);
+                boolean isReadyForDelivery = Adversary.deliverPermission(msg);
+                if(isReadyForDelivery) {
+                    ready_messages.get(msg.receiver).add(msg);
                     unready_message.remove(msg);
                 }
             }
         }
 
         private class Fsign{
-            private HashMap<Long, Message> signed_messages;
-            protected Message sign(Message msg){
-                long signature = rand.nextLong();
-                while(signed_messages.containsKey(signature)) {
-                    signature = rand.nextLong();
-                }
-                msg.sig = signature;
-                signed_messages.put(signature,msg);
-                return msg;
+            private HashSet<Message> signed_messages;
+            protected void sign(Message msg){
+                signed_messages.add(msg);
             }
 
-            public boolean check_sig(Message msg, Long sig){
-                return signed_messages.containsKey(sig);
+            public boolean check_sig(Message msg){
+                return signed_messages.contains(msg);
             }
         }
     }
