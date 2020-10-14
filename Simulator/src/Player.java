@@ -1,13 +1,5 @@
 import java.util.LinkedList;
 
-class Message{
-    String msg;
-    int receiver;
-    int sender;
-    boolean readyForDelivery;
-    int sendRound;
-    long sig;
-};
 public class Player {
     private int player_private_key;
     public int player_id;
