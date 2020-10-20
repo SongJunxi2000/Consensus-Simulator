@@ -21,10 +21,8 @@ public class Simulation_engine {
         }
     }
 }
-
+    // sign in functionality is not part of it
     public class Fauth{
-        HashMap<Integer, LinkedList<Message>> ready_messages;// key is the receiver
-        LinkedList<Message> unready_message;
 
         public void send(Message msg, int player_key){
             if(players_key[msg.sender]!= player_key) return;
@@ -51,6 +49,7 @@ public class Simulation_engine {
         }
 
         private class Fsign{
+            //pass the message and the signer,
             private HashSet<Message> signed_messages;
             protected void sign(Message msg){
                 signed_messages.add(msg);
