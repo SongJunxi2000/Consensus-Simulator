@@ -14,15 +14,16 @@ public class Adversary {
         this.maxRound = maxRound;
     }
     public sendInThisRound(){
+        attack()
         HashMap<Integer, LinkedList<Message>> temp = new HashMap<Integer, LinkedList<Message>>();
-        return ready_messages;
+        temp = ready_messages.clone();
+        ready_messages = new HashMap<Integer, LinkedList<Message>>();
+        return temp;
     }
     public receive(Message message){
         unready_message.add(message);
     }
     public attack(){
 
-
-        return ready_messages
     }
 }
