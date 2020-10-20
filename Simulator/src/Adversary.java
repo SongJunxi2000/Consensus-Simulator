@@ -14,7 +14,7 @@ public class Adversary {
         this.maxRound = maxRound;
     }
     public sendInThisRound(){
-        protal()
+        HashMap<Integer, LinkedList<Message>> temp = new HashMap<Integer, LinkedList<Message>>();
         return ready_messages;
     }
     public receive(Message message){
