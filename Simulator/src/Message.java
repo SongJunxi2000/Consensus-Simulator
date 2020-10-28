@@ -11,6 +11,15 @@ class Message {
         this.sender = sender;
         this.sendRound = sendRound;
         this.sig = sig;
+        prev = null;
+    }
+    public Message(Message msg, int receiver, int sender, int sendRound, long sig){
+        this.prev = msg;
+        this.receiver = receiver;
+        this.sender = sender;
+        this.sendRound = sendRound;
+        this.sig = sig;
+        this.msg = null;
     }
     public int getReceiver() {
         return receiver;
@@ -32,5 +41,7 @@ class Message {
         return msg;
     }
 
-    public Message getPrev( return prev;)
+    public Message getPrev(){
+        return prev;
+    }
 }
