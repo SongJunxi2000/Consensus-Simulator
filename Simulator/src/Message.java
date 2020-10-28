@@ -1,5 +1,6 @@
 class Message {
     private String msg;
+    private Message prev;
     private int receiver;
     private int sender;
     private int sendRound;
@@ -30,4 +31,6 @@ class Message {
     public String getMsg() {
         return msg;
     }
+
+    public Message getPrev( return prev;)
 }
