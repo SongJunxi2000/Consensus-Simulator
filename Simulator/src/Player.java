@@ -20,7 +20,7 @@ public class Player {
     }
     public void send(String msg, int receiver){
         Message message = sign.sign(msg, player_id, player_private_key,round_number,player_private_key);
-        auth.send(message);
+        auth.send(message, player_private_key);
     }
     public LinkedList<Message> receive(){
 

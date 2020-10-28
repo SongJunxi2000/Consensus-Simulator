@@ -9,12 +9,14 @@ public class Adversary {
     int numOfFaultyPlayers;
     int delay;
     int maxRound;
-    public Adversary(LinkedList<Player> faulty_players, int numOfPlayers, int numOfFaultyPlayers, int delay, int maxRound){
-        this.faulty_players = faulty_players;
+    public Adversary( int numOfPlayers, int numOfFaultyPlayers, int delay, int maxRound){
         this.numOfPlayers = numOfPlayers;
         this.numOfFaultyPlayers = numOfFaultyPlayers;
         this.delay = delay;
         this.maxRound = maxRound;
+    }
+    public void setFaultyPlayers(LinkedList<Player> faulty_players){
+        this.faulty_players = faulty_players;
     }
     public HashMap<Integer, LinkedList<Message>> sendInThisRound(){
         attack();

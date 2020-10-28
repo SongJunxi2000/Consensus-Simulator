@@ -12,15 +12,16 @@ public class Simulation_engine {
     Random rand = new Random();
 
     public Simulation_engine(int numOfPlayers, int numOfFaultyPlayers, int delay, int maxRound) {
-        sign = new Fsign();
-        auth = new Fauth(sign);
-
         this.numOfFaultyPlayers = numOfFaultyPlayers;
         this.numOfPlyaers = numOfPlayers;
         this.delay = delay;
         this.maxRound = maxRound;
+
+        adv = new Adversary(numOfPlayers,numOfFaultyPlayers, delay, maxRound);
+        sign = new Fsign();
+        auth = new Fauth(adv,sign);
+
         for (int i = 0; i < numOfPlayers; i++) {
-            //initialize the player, random int + hashmap? or use the sequence of id
             int key = rand.nextInt();
             Player player = new Player(key, i, auth, sign);
             players.put(key, player);
@@ -29,8 +30,8 @@ public class Simulation_engine {
                 faulty_players.add(player);
             }
         }
-        adv = new Adversary(faulty_players, numOfFaultyPlayers, delay, maxRound);
-        auth.setAdKeys(adv, players_key);
+        adv.setFaultyPlayers(faulty_players);
+        auth.setAdKeys( players_key);
         sign.setKeys(players_key);
     }
 
@@ -43,17 +44,17 @@ public class Fauth {
     Adversary adv;
     private int[] players_key;
 
-    public Fauth(Fsign signature) {
+    public Fauth(Adversary adversary,Fsign signature) {
         sign = signature;
+        adv = adversary;
     }
 
-    public void setAdKeys(Adversary adversary, int[] keys) {
-        adv = adversary;
+    public void setAdKeys( int[] keys) {
         players_key = keys;
     }
 
-    public void send(Message msg) {
-        if (sign.check_sig(msg)) {
+    public void send(Message msg, int private_key) {
+        if (players_key[msg.getSender()] == private_key ) {
             Adversary.receive(msg);
         }
     }
@@ -75,22 +76,36 @@ public class Fsign {
         players_key = keys;
     }
 
-    private HashMap<Long, Message> signed_messages;
+    private HashMap<Integer, HashMap<Long, Message>> signed_messages;
     Random rand = new Random();
 
-    protected Message sign(String msg, int receiver, int sender, int RN, int player_key) {
-        if (players_key[sender] != player_key) return null;
-        long sig = rand.nextLong();
-        while (signed_messages.containsKey(sig)) {
-            sig = rand.nextLong();
+    protected Message sign(String msg, int receiver, int sender, int RN, int private_key) {
+        if (players_key[sender] != private_key) return null;
+
+        if(!signed_messages.containsKey(sender)){
+            HashMap<Long, Message> player_all_signed_msg = new  HashMap<Long, Message>();
+            long sig = rand.nextLong();
+            Message tem = new Message(msg, receiver, sender, RN, sig);
+            player_all_signed_msg.put(sig,tem);
+            signed_messages.put(private_key,player_all_signed_msg);
+            return tem;
         }
-        Message tem = new Message(msg, receiver, sender, RN, sig);
-        signed_messages.put(sig, tem);
-        return tem;
+        else{
+            HashMap<Long, Message> player_all_signed_msg = signed_messages.get(sender);
+            long sig = rand.nextLong();
+            while (signed_messages.containsKey(sig)) {
+                sig = rand.nextLong();
+            }
+            Message tem = new Message(msg, receiver, sender, RN, sig);
+            player_all_signed_msg.put(sig, tem);
+            return tem;
+        }
     }
 
-    public boolean check_sig(Message msg) {
-        return signed_messages.containsKey(msg.getSig());
+    public boolean verification(Message msg, int public_key, long sig ) {
+        HashMap<Long, Message> player_all_signed_msg = signed_messages.get(public_key);
+        Message message = player_all_signed_msg.get(sig);
+        return message == msg;
     }
 }
 
