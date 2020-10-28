@@ -28,9 +28,13 @@ public class Player {
     }
     public void endRound(){
 
-        Simulation_engine.endRound(player_private_key);
+        Simulation_engine.endRound(player_id, player_private_key);
     }
     public void terminate(){
-        Simulation_engine.terminate(player_private_key);
+        Simulation_engine.terminate(player_id, player_private_key);
+    }
+
+    public void action(){
+
     }
 }
