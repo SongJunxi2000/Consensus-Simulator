@@ -6,7 +6,7 @@ public class Player {
     public int round_number;
     public Fauth auth;
     public Fsign sign;
-    private Simulation_engine engine;
+    public Simulation_engine engine;
     public int total_num_of_players;
 
     public Player(int key, int id, Fauth authenticate, Fsign signature, Simulation_engine engine, int num) {
@@ -39,12 +39,7 @@ public class Player {
     public void terminate() {
         engine.terminate(player_id, player_private_key);
     }
-
     public Message sign(String msg, int receiver, int RN, Message msg_object) {
         return sign.sign(msg, receiver, player_id, round_number, player_private_key, msg_object);
-    }
-
-    public void action() {
-
     }
 }

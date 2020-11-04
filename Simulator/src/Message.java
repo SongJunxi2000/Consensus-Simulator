@@ -38,7 +38,8 @@ class Message {
     }
 
     public String getMsg() {
-        return msg;
+        if (msg!=null) return msg;
+        else return prev.getMsg();
     }
 
     public Message getPrev(){
