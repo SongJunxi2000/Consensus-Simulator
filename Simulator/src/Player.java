@@ -7,36 +7,44 @@ public class Player {
     public Fauth auth;
     public Fsign sign;
     private Simulation_engine engine;
+    public int total_num_of_players;
 
-    public Player(int key, int id, Fauth authenticate, Fsign signature, Simulation_engine engine){
+    public Player(int key, int id, Fauth authenticate, Fsign signature, Simulation_engine engine, int num) {
         player_private_key = key;
         player_id = id;
         auth = authenticate;
         sign = signature;
         this.engine = engine;
+        total_num_of_players = num;
     }
-    public void update_round(int RN, int private_key){
-        if(private_key == player_private_key) {
+
+    public void update_round(int RN, int private_key) {
+        if (private_key == player_private_key) {
             round_number = RN;
         }
     }
-    public void send(String msg, int receiver){
-        Message message = sign.sign(msg, player_id, player_private_key,round_number,player_private_key);
+
+    public void send(Message message, int receiver) {
         auth.send(message, player_private_key);
     }
-    public LinkedList<Message> receive(){
 
+    public LinkedList<Message> receive() {
         return auth.receive(player_private_key, player_id);
     }
-    public void endRound(){
 
+    public void endRound() {
         engine.endRound(player_id, player_private_key);
     }
-    public void terminate(){
+
+    public void terminate() {
         engine.terminate(player_id, player_private_key);
     }
 
-    public void action(){
+    public Message sign(String msg, int receiver, int RN, Message msg_object) {
+        return sign.sign(msg, receiver, player_id, round_number, player_private_key, msg_object);
+    }
+
+    public void action() {
 
     }
 }

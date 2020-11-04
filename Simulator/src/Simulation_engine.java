@@ -13,6 +13,7 @@ public class Simulation_engine {
     Random rand = new Random();
     HashSet<Player> this_round;
     HashSet<Player> active_players;
+    private int[] players_output;
 
     public Simulation_engine(int numOfPlayers, int numOfFaultyPlayers, int delay, int maxRound) {
         this.numOfFaultyPlayers = numOfFaultyPlayers;
@@ -22,6 +23,7 @@ public class Simulation_engine {
         players = new HashMap<>();
         players_key = new int[numOfPlayers];
         faulty_players = new LinkedList<>();
+        players_output = new int[numOfPlayers];
 
 
         adv = new Adversary(numOfPlayers,numOfFaultyPlayers, delay, maxRound);
@@ -30,7 +32,7 @@ public class Simulation_engine {
 
         for (int i = 0; i < numOfPlayers; i++) {
             int key = rand.nextInt();
-            Player player = new Player(key, i, auth, sign, this);
+            Player player = new Player(key, i, auth, sign, this, numOfPlayers);
             players.put(key, player);
             players_key[i] = key;
             if (i < numOfFaultyPlayers) {
@@ -40,6 +42,8 @@ public class Simulation_engine {
         adv.setFaultyPlayers(faulty_players);
         auth.setAdKeys( players_key);
         sign.setKeys(players_key);
+
+        runProtocol();
     }
 
     public void runProtocol(){
@@ -47,9 +51,16 @@ public class Simulation_engine {
         this_round = (HashSet)active_players.clone();
         Iterator<Player> iterable_players = active_players.iterator();
         for(int i=0;i<maxRound;i++){
+            roundNumber = i+1;
             while(iterable_players.hasNext()){
                 iterable_players.next().action();
             }
+        }
+    }
+
+    public void output(int sender, int private_key, int output){
+        if(check_actioner(sender, private_key)) {
+            players_output[sender] = output;
         }
     }
 
