@@ -1,6 +1,7 @@
 import java.util.*;
 
 public class Simulation_engine {
+
     public int numOfPlayers, numOfFaultyPlayers, delay, maxRound;
     public int roundNumber = 0;
     private HashMap<Integer, Player> players;
@@ -18,6 +19,10 @@ public class Simulation_engine {
         this.numOfPlayers = numOfPlayers;
         this.delay = delay;
         this.maxRound = maxRound;
+        players = new HashMap<>();
+        players_key = new int[numOfPlayers];
+        faulty_players = new LinkedList<>();
+
 
         adv = new Adversary(numOfPlayers,numOfFaultyPlayers, delay, maxRound);
         sign = new Fsign();
