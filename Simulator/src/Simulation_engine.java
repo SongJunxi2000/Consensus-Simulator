@@ -25,7 +25,7 @@ public class Simulation_engine {
 
         for (int i = 0; i < numOfPlayers; i++) {
             int key = rand.nextInt();
-            Player player = new Player(key, i, auth, sign);
+            Player player = new Player(key, i, auth, sign, this);
             players.put(key, player);
             players_key[i] = key;
             if (i < numOfFaultyPlayers) {
@@ -64,37 +64,5 @@ public class Simulation_engine {
         }
     }
 
-}
-
-public class Fauth {
-    HashMap<Integer, LinkedList<Message>> ready_messages;// key is the receiver
-    LinkedList<Message> unready_message;
-    Fsign sign;
-    Adversary adv;
-    private int[] players_key;
-
-    public Fauth(Adversary adversary,Fsign signature) {
-        sign = signature;
-        adv = adversary;
-    }
-
-    public void setAdKeys( int[] keys) {
-        players_key = keys;
-    }
-
-    public void send(Message msg, int private_key) {
-        if (players_key[msg.getSender()] == private_key ) {
-            Adversary.receive(msg);
-        }
-    }
-
-    public LinkedList<Message> receive(int key, int id) {
-        if (players_key[id] != key) return null;
-        return ready_messages.get(key);
-    }
-
-    public void update() {
-        ready_messages = Adversary.sendInThisRound();
-    }
 }
 

@@ -6,12 +6,14 @@ public class Player {
     public int round_number;
     public Fauth auth;
     public Fsign sign;
+    private Simulation_engine engine;
 
-    public Player(int key, int id, Fauth authenticate, Fsign signature){
+    public Player(int key, int id, Fauth authenticate, Fsign signature, Simulation_engine engine){
         player_private_key = key;
         player_id = id;
         auth = authenticate;
         sign = signature;
+        this.engine = engine;
     }
     public void update_round(int RN, int private_key){
         if(private_key == player_private_key) {
@@ -24,14 +26,14 @@ public class Player {
     }
     public LinkedList<Message> receive(){
 
-        return Simulation_engine.Fauth.receive(player_private_key, player_id);
+        return auth.receive(player_private_key, player_id);
     }
     public void endRound(){
 
-        Simulation_engine.endRound(player_id, player_private_key);
+        engine.endRound(player_id, player_private_key);
     }
     public void terminate(){
-        Simulation_engine.terminate(player_id, player_private_key);
+        engine.terminate(player_id, player_private_key);
     }
 
     public void action(){
