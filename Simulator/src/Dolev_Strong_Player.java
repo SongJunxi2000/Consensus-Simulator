@@ -16,9 +16,9 @@ public class Dolev_Strong_Player extends Player {
                     send(sign(null, i, engine.roundNumber, msg),i);
             }
         }
-    }
-    public String output(){
-        if (EXTR.size()==1) return EXTR.iterator().next();
-        else return "0";
+        if (round_number == engine.maxRound){
+            if (EXTR.size()==1) output( Integer.parseInt(EXTR.iterator().next()));
+            else output(0);
+        }
     }
 }

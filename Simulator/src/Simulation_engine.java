@@ -2,6 +2,7 @@ import java.util.*;
 
 public class Simulation_engine {
 
+    //TODO: check consistencity and validity
     public int numOfPlayers, numOfFaultyPlayers, delay, maxRound;
     public int roundNumber = 0;
     private HashMap<Integer, Player> players;

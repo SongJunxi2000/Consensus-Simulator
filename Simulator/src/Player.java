@@ -42,4 +42,10 @@ public class Player {
     public Message sign(String msg, int receiver, int RN, Message msg_object) {
         return sign.sign(msg, receiver, player_id, round_number, player_private_key, msg_object);
     }
+
+    public void output(int output){
+        engine.output(player_id,player_private_key,output);
+    }
+
+    public void action(){}
 }

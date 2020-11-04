@@ -7,7 +7,7 @@ public class Fsign {
     public void setKeys(int[] keys) {
         players_key = keys;
     }
-
+    //Integer: sender ID; Long: signature; Message: message to be signed
     private HashMap<Integer, HashMap<Long, Message>> signed_messages;
     Random rand = new Random();
 
@@ -20,7 +20,7 @@ public class Fsign {
                     new Message(msg_object, receiver, sender, RN, sig) :
                     new Message(msg, receiver, sender, RN, sig);
             player_all_signed_msg.put(sig, tem);
-            signed_messages.put(private_key, player_all_signed_msg);
+            signed_messages.put(sender, player_all_signed_msg);
             return tem;
         } else {
             HashMap<Long, Message> player_all_signed_msg = signed_messages.get(sender);
