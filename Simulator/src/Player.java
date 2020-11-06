@@ -2,7 +2,7 @@ import java.util.LinkedList;
 
 public class Player {
     private int player_private_key;
-    public int player_id;
+    private int player_id;
     public int round_number;
     public Fauth auth;
     public Fsign sign;
@@ -45,6 +45,10 @@ public class Player {
 
     public void output(int output){
         engine.output(player_id,player_private_key,output);
+    }
+
+    public String receive_input(){
+        return engine.receive_input(player_private_key, player_id);
     }
 
     public void action(){}

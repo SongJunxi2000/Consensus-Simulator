@@ -10,7 +10,9 @@ public class Simulation_engine {
     public Fauth auth;
     public Fsign sign;
     public Adversary adv;
+    public Protocol protocol;
     LinkedList<Player> faulty_players;
+    LinkedList<Player> honest_players;
     Random rand = new Random();
     HashSet<Player> this_round;
     HashSet<Player> active_players;
@@ -26,25 +28,36 @@ public class Simulation_engine {
         faulty_players = new LinkedList<>();
         players_output = new int[numOfPlayers];
 
-
         adv = new Adversary(numOfPlayers,numOfFaultyPlayers, delay, maxRound);
         sign = new Fsign();
         auth = new Fauth(adv,sign);
+
+        int current_numeber_of_faulty_players = 0;
 
         for (int i = 0; i < numOfPlayers; i++) {
             int key = rand.nextInt();
             Player player = new Player(key, i, auth, sign, this, numOfPlayers);
             players.put(key, player);
             players_key[i] = key;
-            if (i < numOfFaultyPlayers) {
-                faulty_players.add(player);
+            if(current_numeber_of_faulty_players<numOfFaultyPlayers){
+                int random = rand.nextInt(numOfPlayers);
+                if (random < numOfFaultyPlayers) {
+                    faulty_players.add(player);
+                    current_numeber_of_faulty_players++;
+                }
+                else
+                    honest_players.add(player);
             }
+            else
+                honest_players.add(player);
+
         }
         adv.setFaultyPlayers(faulty_players);
         auth.setAdKeys( players_key);
         sign.setKeys(players_key);
 
         runProtocol();
+        check_output();
     }
 
     public void runProtocol(){
@@ -54,7 +67,7 @@ public class Simulation_engine {
         for(int i=0;i<maxRound;i++){
             roundNumber = i+1;
             while(iterable_players.hasNext()){
-                iterable_players.next().action();
+                Protocol.action(iterable_players.next());
             }
         }
     }
@@ -79,6 +92,16 @@ public class Simulation_engine {
         if(check_actioner(sender, private_key)){
             this_round.remove(players.get(private_key));
         }
+    }
+
+    public String receive_input(int id, int private_key){
+        if(check_actioner(id, private_key)){
+
+        }
+    }
+
+    public boolean check_output(){
+        return protocol.check_output(players_output);
     }
 
 }
