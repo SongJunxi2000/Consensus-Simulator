@@ -12,13 +12,15 @@ public class Simulation_engine {
     public Adversary adv;
     public Protocol protocol;
     LinkedList<Player> faulty_players;
-    LinkedList<Player> honest_players;
+    LinkedList<Integer> honest_players;
     Random rand = new Random();
     HashSet<Player> this_round;
     HashSet<Player> active_players;
     private int[] players_output;
+    public int designated_sender;
 
     public Simulation_engine(int numOfPlayers, int numOfFaultyPlayers, int delay, int maxRound) {
+        protocol = new Dolev_Strong_Protocol();
         this.numOfFaultyPlayers = numOfFaultyPlayers;
         this.numOfPlayers = numOfPlayers;
         this.delay = delay;
@@ -26,6 +28,7 @@ public class Simulation_engine {
         players = new HashMap<>();
         players_key = new int[numOfPlayers];
         faulty_players = new LinkedList<>();
+        honest_players = new LinkedList<>();
         players_output = new int[numOfPlayers];
 
         adv = new Adversary(numOfPlayers,numOfFaultyPlayers, delay, maxRound);
@@ -46,10 +49,10 @@ public class Simulation_engine {
                     current_numeber_of_faulty_players++;
                 }
                 else
-                    honest_players.add(player);
+                    honest_players.add(i);
             }
             else
-                honest_players.add(player);
+                honest_players.add(i);
 
         }
         adv.setFaultyPlayers(faulty_players);
@@ -67,7 +70,7 @@ public class Simulation_engine {
         for(int i=0;i<maxRound;i++){
             roundNumber = i+1;
             while(iterable_players.hasNext()){
-                Protocol.action(iterable_players.next());
+                protocol.action(iterable_players.next());
             }
         }
     }
@@ -96,12 +99,15 @@ public class Simulation_engine {
 
     public String receive_input(int id, int private_key){
         if(check_actioner(id, private_key)){
-            protocol.receive_input(id, roundNumber);
+            return protocol.input(id, roundNumber);
         }
+        else
+            return null;
     }
 
     public boolean check_output(){
-        return protocol.check_output(players_output);
+
+        return protocol.check_output(designated_sender,honest_players, players_output);
     }
 
 }

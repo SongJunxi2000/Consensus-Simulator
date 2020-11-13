@@ -25,6 +25,7 @@ public class Fauth {
 
     public LinkedList<Message> receive(int key, int id) {
         if (players_key[id] != key) return null;
+        ready_messages = adv.sendInThisRound();
         return ready_messages.get(key);
     }
 
