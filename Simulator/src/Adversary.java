@@ -28,6 +28,7 @@ public class Adversary {
         unready_message.add(message);
     }
     public void attack(){
+
 //TODO: adversary for dolev_strong
     }
 }
