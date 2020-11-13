@@ -96,7 +96,7 @@ public class Simulation_engine {
 
     public String receive_input(int id, int private_key){
         if(check_actioner(id, private_key)){
-
+            protocol.receive_input(id, roundNumber);
         }
     }
 
