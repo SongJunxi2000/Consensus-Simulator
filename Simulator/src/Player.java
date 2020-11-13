@@ -8,6 +8,7 @@ public class Player {
     public Fsign sign;
     public Simulation_engine engine;
     public int total_num_of_players;
+    private Memory mem;
 
     public Player(int key, int id, Fauth authenticate, Fsign signature, Simulation_engine engine, int num) {
         player_private_key = key;
@@ -16,6 +17,7 @@ public class Player {
         sign = signature;
         this.engine = engine;
         total_num_of_players = num;
+        mem = new Memory();
     }
 
     public void update_round(int RN, int private_key) {
@@ -52,4 +54,6 @@ public class Player {
     }
 
     public void action(){}
+
+    public Memory getMem(){return mem;}
 }
