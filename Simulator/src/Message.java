@@ -1,25 +1,13 @@
 class Message {
     private String msg;
-    private Message prev;
     private int receiver;
     private int sender;
     private int sendRound;
-    private long sig;
-    public Message(String msg, int receiver, int sender, int sendRound, long sig){
+    public Message(String msg, int receiver, int sender, int sendRound){
         this.msg = msg;
         this.receiver = receiver;
         this.sender = sender;
         this.sendRound = sendRound;
-        this.sig = sig;
-        prev = null;
-    }
-    public Message(Message msg, int receiver, int sender, int sendRound, long sig){
-        this.prev = msg;
-        this.receiver = receiver;
-        this.sender = sender;
-        this.sendRound = sendRound;
-        this.sig = sig;
-        this.msg = null;
     }
     public int getReceiver() {
         return receiver;
@@ -33,16 +21,8 @@ class Message {
         return sendRound;
     }
 
-    public long getSig() {
-        return sig;
-    }
-
     public String getMsg() {
-        if (msg!=null) return msg;
-        else return prev.getMsg();
+        return msg;
     }
 
-    public Message getPrev(){
-        return prev;
-    }
 }
