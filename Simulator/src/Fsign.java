@@ -1,6 +1,17 @@
 import java.util.HashMap;
 import java.util.Random;
 
+class signedM{
+    public signedM(String m, int p, long s){
+        msg = m;
+        player=  p;
+        sig = s;
+    }
+    String msg;
+    int player;
+    long sig;
+}
+
 public class Fsign {
     private int[] players_key;
 
@@ -8,38 +19,32 @@ public class Fsign {
         players_key = keys;
     }
     //Integer: sender ID; Long: signature; Message: message to be signed
-    private HashMap<Integer, HashMap<Long, Message>> signed_messages;
+    private HashMap<Integer, HashMap<Long, String>> signed_messages;
     Random rand = new Random();
 
-    protected Message sign(String msg, int receiver, int sender, int RN, int private_key, Message msg_object) {
+    protected signedM sign(String msg, int sender, int private_key) {
         if (players_key[sender] != private_key) return null;
         if (!signed_messages.containsKey(sender)) {
-            HashMap<Long, Message> player_all_signed_msg = new HashMap<Long, Message>();
+            HashMap<Long, String> player_all_signed_msg = new HashMap<Long, String>();
             long sig = rand.nextLong();
-            Message tem = (msg == null) ?
-                    new Message(msg_object, receiver, sender, RN, sig) :
-                    new Message(msg, receiver, sender, RN, sig);
-            player_all_signed_msg.put(sig, tem);
+            player_all_signed_msg.put(sig, msg);
             signed_messages.put(sender, player_all_signed_msg);
-            return tem;
+            return new signedM(msg,sender,sig);
         } else {
-            HashMap<Long, Message> player_all_signed_msg = signed_messages.get(sender);
+            HashMap<Long, String> player_all_signed_msg = signed_messages.get(sender);
             long sig = rand.nextLong();
             while (signed_messages.containsKey(sig)) {
                 sig = rand.nextLong();
             }
-            Message tem = (msg == null) ?
-                    new Message(msg_object, receiver, sender, RN, sig) :
-                    new Message(msg, receiver, sender, RN, sig);
-            player_all_signed_msg.put(sig, tem);
-            return tem;
+            player_all_signed_msg.put(sig, msg);
+            return new signedM(msg,sender,sig);
         }
     }
 
-    public boolean verification(Message msg, int public_key, long sig) {
-        HashMap<Long, Message> player_all_signed_msg = signed_messages.get(public_key);
-        Message message = player_all_signed_msg.get(sig);
-        return message == msg;
+    public boolean verification(signedM m) {
+        HashMap<Long, String> player_all_signed_msg = signed_messages.get(m.player);
+        String message = player_all_signed_msg.get(m.sig);
+        return message == m.msg;
     }
 }
 
