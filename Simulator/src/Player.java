@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Player {
@@ -8,7 +9,7 @@ public class Player {
     public Fsign sign;
     public Simulation_engine engine;
     public int total_num_of_players;
-    private Memory mem;
+    static HashMap<Integer, HashMap<Integer, String>> input;
 
     public Player(int key, int id, Fauth authenticate, Fsign signature, Simulation_engine engine, int num) {
         player_private_key = key;
@@ -17,7 +18,6 @@ public class Player {
         sign = signature;
         this.engine = engine;
         total_num_of_players = num;
-        mem = new Memory();
     }
 
     public void update_round(int RN, int private_key) {
@@ -26,8 +26,8 @@ public class Player {
         }
     }
 
-    public void send(Message message, int receiver) {
-        auth.send(message, player_private_key);
+    public void send(String msg, int receiver, int round_number) {
+        auth.send(msg, player_id, player_private_key, receiver, round_number);
     }
 
     public LinkedList<Message> receive() {
@@ -41,8 +41,8 @@ public class Player {
     public void terminate() {
         engine.terminate(player_id, player_private_key);
     }
-    public Message sign(String msg, int receiver, int RN, Message msg_object) {
-        return sign.sign(msg, receiver, player_id, round_number, player_private_key, msg_object);
+    public signedM sign(String msg) {
+        return sign.sign(msg, player_id, player_private_key);
     }
 
     public void output(int output){
@@ -50,10 +50,9 @@ public class Player {
     }
 
     public String receive_input(){
-        return engine.receive_input(player_private_key, player_id);
+        return null;
     }
 
     public void action(){}
 
-    public Memory getMem(){return mem;}
 }
