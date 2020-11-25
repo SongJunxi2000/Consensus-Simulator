@@ -2,7 +2,6 @@ import java.util.*;
 
 public class Simulation_engine {
 
-    //TODO: check consistencity and validity
     public int numOfPlayers, numOfFaultyPlayers, delay, maxRound;
     public int roundNumber = 0;
     private HashMap<Integer, Player> players;
@@ -10,7 +9,6 @@ public class Simulation_engine {
     public Fauth auth;
     public Fsign sign;
     public Adversary adv;
-    public Protocol protocol;
     LinkedList<Player> faulty_players;
     LinkedList<Integer> honest_players;
     Random rand = new Random();
@@ -20,7 +18,6 @@ public class Simulation_engine {
     public int designated_sender;
 
     public Simulation_engine(int numOfPlayers, int numOfFaultyPlayers, int delay, int maxRound) {
-        protocol = new Dolev_Strong_Protocol();
         this.numOfFaultyPlayers = numOfFaultyPlayers;
         this.numOfPlayers = numOfPlayers;
         this.delay = delay;
@@ -39,6 +36,7 @@ public class Simulation_engine {
 
         for (int i = 0; i < numOfPlayers; i++) {
             int key = rand.nextInt();
+            //need to change
             Player player = new Player(key, i, auth, sign, this, numOfPlayers);
             players.put(key, player);
             players_key[i] = key;
@@ -70,7 +68,7 @@ public class Simulation_engine {
         for(int i=0;i<maxRound;i++){
             roundNumber = i+1;
             while(iterable_players.hasNext()){
-                protocol.action(iterable_players.next());
+                iterable_players.next().action();
             }
         }
     }
@@ -97,17 +95,10 @@ public class Simulation_engine {
         }
     }
 
-    public String receive_input(int id, int private_key){
-        if(check_actioner(id, private_key)){
-            return protocol.input(id, roundNumber);
-        }
-        else
-            return null;
-    }
 
     public boolean check_output(){
 
-        return protocol.check_output(designated_sender,honest_players, players_output);
+        return Player.check_output(designated_sender,honest_players, players_output);
     }
 
 }

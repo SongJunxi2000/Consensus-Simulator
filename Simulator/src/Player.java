@@ -55,4 +55,8 @@ public class Player {
 
     public void action(){}
 
+    static boolean check_output(int designated_sender, LinkedList<Integer> honest_players_id, int[] outputs){
+        return false;
+    };
+
 }
