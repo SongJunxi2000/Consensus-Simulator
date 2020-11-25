@@ -41,7 +41,7 @@ public class Player {
     public void terminate() {
         engine.terminate(player_id, player_private_key);
     }
-    public signedM sign(String msg) {
+    public String sign(String msg) {
         return sign.sign(msg, player_id, player_private_key);
     }
 
