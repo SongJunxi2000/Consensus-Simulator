@@ -52,7 +52,9 @@ public class Player {
     public String receive_input(){
         return null;
     }
+    public String parse(String msg){
 
+    }
     public void action(){}
 
 }

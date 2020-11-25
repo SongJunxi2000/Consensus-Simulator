@@ -17,9 +17,10 @@ public class Fauth {
         players_key = keys;
     }
 
-    public void send(Message msg, int private_key) {
-        if (players_key[msg.getSender()] == private_key ) {
-            adv.receive(msg);
+    public void send(String msg, int receiver, int sender, int private_key, int sendRound) {
+        if (players_key[sender] == private_key ) {
+            Message wrapper = new Message(msg, receiver, sender, sendRound);
+            adv.receive(wrapper);
         }
     }
 
