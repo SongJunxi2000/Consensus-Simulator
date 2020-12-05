@@ -26,9 +26,13 @@ public class Fsign {
     private HashMap<Integer, HashMap<Long, String>> signed_messages;
     Random rand = new Random();
 
+    public Fsign(){
+        signed_messages = new HashMap<>();
+    }
+
     protected String sign(String msg, int sender, int private_key) {
         //for test
-        // if (players_key[sender] != private_key) return null;
+        if (players_key[sender] != private_key) return null;
         long sig = rand.nextLong();
         if (!signed_messages.containsKey(sender)) {
             HashMap<Long, String> player_all_signed_msg = new HashMap<Long, String>();
@@ -46,10 +50,16 @@ public class Fsign {
     }
 
     public boolean verification(String verified_m) {
-        signedM m = gson.fromJson(verified_m, signedM.class);
-        HashMap<Long, String> player_all_signed_msg = signed_messages.get(m.player);
-        String message = player_all_signed_msg.get(m.sig);
-        return message == m.msg;
+        try {
+            signedM m = gson.fromJson(verified_m, signedM.class);
+            HashMap<Long, String> player_all_signed_msg = signed_messages.get(m.player);
+            String message = player_all_signed_msg.get(m.sig);
+            System.out.println(m.msg+" "+message);
+            return message.equals(m.msg);
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 }
 
