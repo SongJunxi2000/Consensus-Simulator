@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Adversary {
@@ -18,15 +19,24 @@ public class Adversary {
     public void setFaultyPlayers(LinkedList<Player> faulty_players){
         this.faulty_players = faulty_players;
     }
-    public HashMap<Integer, LinkedList<Message>> sendInThisRound(){
+    public HashMap<Integer, LinkedList<Message>> sendInThisRound(int round_number){
         attack();
 
-        while (!unready_message.isEmpty()){
-            Message msg = unready_message.remove();
-            LinkedList<Message> list = ready_messages.getOrDefault(msg.getReceiver(),new LinkedList<Message>());
-            list.add(msg);
-            ready_messages.put(msg.getReceiver(), list);
+        Iterator um_iterator = unready_message.iterator();
+        LinkedList<Message> tem = new LinkedList<>();
+
+        while (um_iterator.hasNext()){
+            Message msg = (Message) um_iterator.next();
+            if(msg.getSendRound()>round_number){
+                tem.add(msg);
+            }
+            else{
+                LinkedList<Message> list = ready_messages.getOrDefault(msg.getReceiver(),new LinkedList<Message>());
+                list.add(msg);
+                ready_messages.put(msg.getReceiver(), list);
+            }
         }
+        unready_message = (LinkedList<Message>) tem.clone();
         HashMap<Integer, LinkedList<Message>> temp;
         temp = (HashMap<Integer, LinkedList<Message>>)ready_messages.clone();
         ready_messages = new HashMap<Integer, LinkedList<Message>>();

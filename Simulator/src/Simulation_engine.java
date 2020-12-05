@@ -67,6 +67,7 @@ public class Simulation_engine {
         Iterator<Player> iterable_players = active_players.iterator();
         for(int i=0;i<maxRound;i++){
             roundNumber = i+1;
+            auth.update_receive(roundNumber);
             while(iterable_players.hasNext()){
                 iterable_players.next().action();
             }

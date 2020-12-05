@@ -24,14 +24,14 @@ public class Fauth {
         }
     }
 
+    public void update_receive(int round_number){
+        ready_messages = adv.sendInThisRound(round_number);
+    }
+
     public LinkedList<Message> receive(int key, int id) {
         if (players_key[id] != key) return null;
-        ready_messages = adv.sendInThisRound();
         return ready_messages.get(key);
     }
 
-    public void update() {
-        ready_messages = adv.sendInThisRound();
-    }
 }
 
