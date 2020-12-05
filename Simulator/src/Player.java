@@ -52,9 +52,7 @@ public class Player {
     public String receive_input(){
         return null;
     }
-    public String parse(String msg){
-
-    }
+    public String parse(String msg){ return null; }
     public void action(){}
 
     static boolean check_output(int designated_sender, LinkedList<Integer> honest_players_id, int[] outputs){

@@ -3,6 +3,17 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Random;
 
+class signedM{
+    public signedM(String m, int p, long s){
+        msg = m;
+        player=  p;
+        sig = s;
+    }
+    String msg;
+    int player;
+    long sig;
+}
+
 
 public class Fsign {
     private int[] players_key;
@@ -11,12 +22,13 @@ public class Fsign {
     public void setKeys(int[] keys) {
         players_key = keys;
     }
-    //Integer: sender ID; Long: signature; Message: message to be signed
+    //Integer: sender ID/ public key; Long: signature; Message: message to be signed
     private HashMap<Integer, HashMap<Long, String>> signed_messages;
     Random rand = new Random();
 
     protected String sign(String msg, int sender, int private_key) {
-        if (players_key[sender] != private_key) return null;
+        //for test
+        // if (players_key[sender] != private_key) return null;
         long sig = rand.nextLong();
         if (!signed_messages.containsKey(sender)) {
             HashMap<Long, String> player_all_signed_msg = new HashMap<Long, String>();
@@ -24,23 +36,17 @@ public class Fsign {
             signed_messages.put(sender, player_all_signed_msg);
         } else {
             HashMap<Long, String> player_all_signed_msg = signed_messages.get(sender);
-            while (signed_messages.containsKey(sig)) {
+            while (player_all_signed_msg.containsKey(sig)) {
                 sig = rand.nextLong();
             }
             player_all_signed_msg.put(sig, msg);
         }
-        long finalSig = sig;
-        class signedM{
-            private String message = msg;
-            private long signature = finalSig;
-            private int player = sender;
-        }
-        signedM m = new signedM();
+        signedM m = new signedM(msg, sender,sig);
         return gson.toJson(m);
     }
 
-    public boolean verification(String m) {
-        MyType obj = gson.fromJson(m, MyType.class);
+    public boolean verification(String verified_m) {
+        signedM m = gson.fromJson(verified_m, signedM.class);
         HashMap<Long, String> player_all_signed_msg = signed_messages.get(m.player);
         String message = player_all_signed_msg.get(m.sig);
         return message == m.msg;

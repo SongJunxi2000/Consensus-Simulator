@@ -4,7 +4,7 @@ public class Simulation_engine {
 
     public int numOfPlayers, numOfFaultyPlayers, delay, maxRound;
     public int roundNumber = 0;
-    private HashMap<Integer, Player> players;
+    private HashMap<Integer, Player> players;//private key -> player
     private int[] players_key;
     public Fauth auth;
     public Fsign sign;
