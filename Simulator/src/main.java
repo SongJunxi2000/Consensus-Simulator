@@ -45,5 +45,18 @@ public class main {
 //        channel.update_receive(2);
 //        System.out.println(received.get(0).getSender());
         //Fatuh test ends
+
+        //Player test starts
+        Adversary adv = new Adversary(30,10,10,20);
+        Fsign sig = new Fsign();
+        Fauth channel = new Fauth(adv,sig);
+        Simulation_engine engine = new Simulation_engine(30, 10, 10, 20);
+        Player player = new Player(0,0,channel, sig, engine, 30);
+        String test = "(0,0,1212)(0,0,12122)";
+        LinkedList<signedM> lst = player.parse(test);
+        for (signedM m : lst){
+            System.out.println(m.msg+" "+m.player+" "+m.sig);
+        }
+        //Player test ends
     }
 }
