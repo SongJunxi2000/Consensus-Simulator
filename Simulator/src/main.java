@@ -1,4 +1,10 @@
+
+
+import com.google.gson.Gson;
+
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 public class main {
     public static void main(String[] args) {
@@ -47,16 +53,22 @@ public class main {
         //Fatuh test ends
 
         //Player test starts
-        Adversary adv = new Adversary(30,10,10,20);
-        Fsign sig = new Fsign();
-        Fauth channel = new Fauth(adv,sig);
-        Simulation_engine engine = new Simulation_engine(30, 10, 10, 20);
-        Player player = new Player(0,0,channel, sig, engine, 30);
-        String test = "(0,0,1212)(0,0,12122)";
-        LinkedList<signedM> lst = player.parse(test);
-        for (signedM m : lst){
-            System.out.println(m.msg+" "+m.player+" "+m.sig);
-        }
+//        Adversary adv = new Adversary(30,10,10,20);
+//        Fsign sig = new Fsign();
+//        Fauth channel = new Fauth(adv,sig);
+//        Simulation_engine engine = new Simulation_engine(30, 10, 10, 20);
+//        Player player = new Player(0,0,channel, sig, engine, 30);
+//        String test = "(0,0,1212)(0,0,12122)";
+//        LinkedList<signedM> lst = player.parse(test);
+//        for (signedM m : lst){
+//            System.out.println(m.msg+" "+m.player+" "+m.sig);
+//        }
         //Player test ends
+
+        //Gson to String
+        //Format: [{"msg":"1","player":1,"sig":1},{"msg":"1","player":2,"sig":2}]
+//        List<signedM> test = Arrays.asList(new signedM("1", 1, 1), new signedM("1",2, 2));
+//        Gson gson = new Gson();
+//        System.out.println(gson.toJson(test));
     }
 }

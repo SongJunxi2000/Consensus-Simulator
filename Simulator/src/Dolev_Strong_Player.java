@@ -70,4 +70,16 @@ public class Dolev_Strong_Player extends Player {
             else output(0);
         }
     }
+
+    static boolean check_output(int designated_sender, LinkedList<Integer> honest_players_id, int[] outputs){
+        Iterator honest_player = honest_players_id.iterator();
+        int bit = outputs[(int)honest_players_id.getFirst()];
+        if(honest_players_id.contains(designated_sender)){
+            bit = outputs[designated_sender];
+        }
+        while(honest_player.hasNext()){
+            if (outputs[(int)honest_player.next()]!= bit) return false;
+        }
+        return true;
+    }
 }
