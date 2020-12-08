@@ -19,6 +19,7 @@ public class Fauth {
 
     public void send(String msg, int receiver, int sender, int private_key, int sendRound) {
         if (players_key[sender] == private_key ) {
+            //System.out.println(receiver+" "+sender+" "+msg);
             Message wrapper = new Message(msg, receiver, sender, sendRound);
             adv.receive(wrapper);
         }
@@ -30,7 +31,9 @@ public class Fauth {
 
     public LinkedList<Message> receive(int key, int id) {
         if (players_key[id] != key) return null;
-        return ready_messages.get(key);
+//        for (Message m : ready_messages.get(key))
+//            System.out.println(m.getMsg());
+        return ready_messages.get(id);
     }
 
 }

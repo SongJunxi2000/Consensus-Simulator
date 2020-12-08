@@ -54,7 +54,7 @@ public class Fsign {
             signedM m = gson.fromJson(verified_m, signedM.class);
             HashMap<Long, String> player_all_signed_msg = signed_messages.get(m.player);
             String message = player_all_signed_msg.get(m.sig);
-            System.out.println(m.msg+" "+message);
+            //System.out.println(message.equals(m.msg));
             return message.equals(m.msg);
         }
         catch (Exception e){

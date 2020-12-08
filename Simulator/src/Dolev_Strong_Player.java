@@ -5,24 +5,32 @@ import java.util.*;
 
 public class Dolev_Strong_Player extends Player {
     HashSet<String> EXTR = new HashSet<String>();
-
-    public Dolev_Strong_Player(int key, int id, Fauth authenticate, Fsign signature, Simulation_engine engine, int num) {
+    boolean isSender;
+    public Dolev_Strong_Player(int key, int id, Fauth authenticate, Fsign signature, Simulation_engine engine, int num, boolean isSender) {
         super(key, id, authenticate, signature, engine, num);
+        this.isSender = isSender;
+    }
+    public void receive_input(){
+        if (isSender && engine.roundNumber == 0){
+            EXTR.add("1");
+            for (int i = 0; i < engine.numOfPlayers; i++)
+                send(sign("1"),i,round_number);
+        }
     }
     public ArrayList<String> valid_msg(String message){
         //verify signature
         ArrayList<String> res = new ArrayList<String>();
         signedM msg;
         Gson gson = new Gson();
-        LinkedList<signedM> messages = gson.fromJson(message, new TypeToken<LinkedList<signedM>>(){}.getType());
+        LinkedList<signedM> messages = gson.fromJson('['+message+']', new TypeToken<LinkedList<signedM>>(){}.getType());
         Iterator<signedM> iter = messages.iterator();
         boolean found_0 = false;
         boolean found_1 = false;
         HashMap<Integer, signedM> map = new HashMap<Integer, signedM>();
         HashSet<Integer> diff = new HashSet<Integer>();
-        while (iter.next() != null){
+        while (iter.hasNext()){
             msg = iter.next();
-            if (!sign.verification(gson.toJson(msg)));
+            if (!sign.verification(gson.toJson(msg)))
                 messages.remove(msg);
             if (msg.player == engine.designated_sender){
                 if (msg.msg.equals("0"))
@@ -38,7 +46,7 @@ public class Dolev_Strong_Player extends Player {
         int count_0 = 0;
         int count_1 = 0;
         iter = messages.iterator();
-        while (iter.next()!=null){
+        while (iter.hasNext()){
             msg = iter.next();
             if (diff.contains(msg.player))
                 messages.remove(msg);
@@ -54,18 +62,23 @@ public class Dolev_Strong_Player extends Player {
         return res;
     }
     public void action() {
+        receive_input();
+        update_round();
         LinkedList<Message> messages = receive();
-        while (messages.peek() != null) {
+        //if (messages == null) System.out.print(round_number);
+        while (messages!=null&&messages.peek() != null) {
             Message msg = messages.remove();
             ArrayList<String> valid_msg = valid_msg(msg.getMsg());
+            //System.out.println(valid_msg.size());
             for (String message : valid_msg)
                 if (!EXTR.contains(message)) {
-                    EXTR.add(msg.getMsg());
+                    EXTR.add(message);
                     for (int i = 0; i < engine.numOfPlayers; i++)
-                        send(sign(msg.getMsg()),i,round_number);
+                        send(msg.getMsg()+','+sign(message),i,round_number);
                 }
         }
-        if (round_number == engine.maxRound) {
+        if (round_number == engine.maxRound - 1) {
+            //System.out.println(EXTR.size());
             if (EXTR.size() == 1) output(Integer.parseInt(EXTR.iterator().next()));
             else output(0);
         }

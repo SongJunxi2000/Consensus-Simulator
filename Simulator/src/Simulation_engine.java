@@ -15,7 +15,7 @@ public class Simulation_engine {
     HashSet<Player> this_round;
     HashSet<Player> active_players;
     private int[] players_output;
-    public int designated_sender;
+    public int designated_sender = 0;
 
     public Simulation_engine(int numOfPlayers, int numOfFaultyPlayers, int delay, int maxRound) {
         this.numOfFaultyPlayers = numOfFaultyPlayers;
@@ -37,7 +37,7 @@ public class Simulation_engine {
         for (int i = 0; i < numOfPlayers; i++) {
             int key = rand.nextInt();
             //need to change
-            Player player = new Player(key, i, auth, sign, this, numOfPlayers);
+            Dolev_Strong_Player player = new Dolev_Strong_Player(key, i, auth, sign, this, numOfPlayers,i == 0);
             players.put(key, player);
             players_key[i] = key;
             if(current_numeber_of_faulty_players<numOfFaultyPlayers){
@@ -64,14 +64,18 @@ public class Simulation_engine {
     public void runProtocol(){
         active_players = new HashSet<>(players.values());
         this_round = (HashSet)active_players.clone();
-        Iterator<Player> iterable_players = active_players.iterator();
+
         for(int i=0;i<maxRound;i++){
-            roundNumber = i+1;
+            roundNumber = i;
             auth.update_receive(roundNumber);
+            Iterator<Player> iterable_players = active_players.iterator();
             while(iterable_players.hasNext()){
                 iterable_players.next().action();
             }
+
         }
+        for (int i : players_output)
+            System.out.print(i+" ");
     }
 
     public void output(int sender, int private_key, int output){
@@ -99,7 +103,7 @@ public class Simulation_engine {
 
     public boolean check_output(){
 
-        return Player.check_output(designated_sender,honest_players, players_output);
+        return Dolev_Strong_Player.check_output(designated_sender,honest_players, players_output);
     }
 
 }

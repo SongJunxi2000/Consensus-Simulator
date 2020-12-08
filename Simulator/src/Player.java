@@ -23,18 +23,16 @@ public class Player {
         total_num_of_players = num;
     }
 
-    public void update_round(int RN, int private_key) {
-        if (private_key == player_private_key) {
-            round_number = RN;
-        }
+    public void update_round() {
+        round_number = engine.roundNumber;
     }
 
     public void send(String msg, int receiver, int round_number) {
-        auth.send(msg, player_id, player_private_key, receiver, round_number);
+        auth.send(msg, receiver, player_id, player_private_key,  round_number);
     }
 
     public LinkedList<Message> receive() {
-        return auth.receive(player_private_key, player_id);
+        return auth. receive(player_private_key, player_id);
     }
 
     public void endRound() {
@@ -52,9 +50,6 @@ public class Player {
         engine.output(player_id,player_private_key,output);
     }
 
-    public String receive_input(){
-        return null;
-    }
     public LinkedList<signedM> parse(String msg){
         StringBuilder sb = new StringBuilder(msg);
         Gson gson = new Gson();
