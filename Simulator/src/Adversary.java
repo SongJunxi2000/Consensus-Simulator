@@ -6,18 +6,22 @@ public class Adversary {
     HashMap<Integer, LinkedList<Message>> ready_messages = new HashMap<Integer, LinkedList<Message>>();;
     LinkedList<Message> unready_message = new LinkedList<Message>();
     LinkedList<Player> faulty_players;
+    LinkedList<Integer> faulty_players_id;
     int numOfPlayers;
     int numOfFaultyPlayers;
     int delay;
     int maxRound;
+    Player desig_sender;
     public Adversary( int numOfPlayers, int numOfFaultyPlayers, int delay, int maxRound){
         this.numOfPlayers = numOfPlayers;
         this.numOfFaultyPlayers = numOfFaultyPlayers;
         this.delay = delay;
         this.maxRound = maxRound;
     }
-    public void setFaultyPlayers(LinkedList<Player> faulty_players){
-        this.faulty_players = faulty_players;
+    public void setFaultyPlayers(LinkedList<Player> faulty_players_given, LinkedList<Integer> f_id){
+        this.faulty_players_id = f_id;
+        this.faulty_players = faulty_players_given;
+        numOfFaultyPlayers = f_id.size();
     }
     public HashMap<Integer, LinkedList<Message>> sendInThisRound(int round_number){
         attack();
@@ -46,6 +50,31 @@ public class Adversary {
         unready_message.add(message);
     }
     public void attack(){
+        if(faulty_players == null)
+            return;
+        Simulation_engine eng = faulty_players.getFirst().engine;
+        for (int i = 0;i<numOfFaultyPlayers;i++){
+            if(faulty_players_id.get(i) == 0)
+                desig_sender = faulty_players.get(i);
+        }
+        if(desig_sender == null) return;
+        if(eng.roundNumber == 0){
+            for(int i=0;i<numOfPlayers;i++){
+                desig_sender.send(desig_sender.sign("1"),i,0);
+            }
+        }
+        int honest_target = 0;
+        while(faulty_players_id.contains(honest_target))
+            honest_target++;
+        String msg = "";
+        for(int i = 0;i<numOfFaultyPlayers;i++){
+            msg = msg+","+faulty_players.get(i).sign("0");
+        }
+        msg = msg.substring(1);
+
+        faulty_players.getFirst().send(msg,honest_target,maxRound-1);
+        System.out.println(honest_target);
+        System.out.println(msg);
 
 //TODO: adversary for dolev_strong
     }
