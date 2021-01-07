@@ -1,4 +1,122 @@
-<?import javafx.scene.layout.GridPane?>
-<GridPane fx:controller="sample.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-</GridPane>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.DropdownButton?>
+<?import com.gluonhq.charm.glisten.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="824.0" prefWidth="1145.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1150.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Separator layoutY="165.0" prefHeight="3.0" prefWidth="230.0" />
+                  <Label layoutX="-2.0" layoutY="6.0" text="Input:" translateX="10.0">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="23.0" text="Total # of players:">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="15.0" layoutY="45.0" text="Max # of faulty players:">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="15.0" layoutY="66.0" text="Max Delay:">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="15.0" layoutY="89.0" text="Protocol:">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="147.0" layoutY="119.0" minWidth="49.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="49.0" text="Save" />
+                  <Button layoutX="79.0" layoutY="178.0" minWidth="49.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="49.0" text="Play" />
+                  <DropdownButton layoutX="79.0" layoutY="86.0" prefHeight="8.0" prefWidth="112.0">
+                      <items>
+                          <MenuItem text="Dolev Strong" />
+                          <MenuItem text="Streamlet" />
+                      </items>
+                  </DropdownButton>
+                  <Button layoutX="13.0" layoutY="178.0" minWidth="49.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="49.0" text="Step" />
+                  <Button layoutX="147.0" layoutY="178.0" minWidth="49.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="64.0" text="Output" />
+                  <Separator layoutY="225.0" prefHeight="3.0" prefWidth="230.0" />
+                  <Label layoutX="4.0" layoutY="235.0" text="Output:">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="19.0" layoutY="256.0" text="Validity:">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="274.0" text="Consistency:">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="21.0" layoutY="294.0" text="Failed Players:">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <Separator layoutY="347.0" prefHeight="3.0" prefWidth="230.0" />
+                  <Label layoutX="5.0" layoutY="358.0" text="Message:">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="15.0" layoutY="376.0" text="From:">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="15.0" layoutY="395.0" text="To:">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="15.0" layoutY="416.0" text="Round:">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="15.0" layoutY="438.0" text="Content:">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="161.0" layoutY="17.0" prefHeight="28.0" prefWidth="41.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="781.0" prefWidth="805.0">
+               <children>
+                  <Label layoutX="7.0" layoutY="7.0" text="Round:">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="8.0" layoutY="26.0" text="Faulty Players:">
+                     <font>
+                        <Font name="Kai Regular" size="13.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+         </items>
+      </SplitPane>
+   </children>
+</VBox>
