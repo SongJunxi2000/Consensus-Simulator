@@ -1,4 +1,4 @@
-package sample;
+package GUI;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,13 +11,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("Simulator.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Simulator");
         primaryStage.setScene(new Scene(root, 1200, 800));
         primaryStage.show();
     }
 
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+    public static void main(String[] args) { launch(args); }
 }
