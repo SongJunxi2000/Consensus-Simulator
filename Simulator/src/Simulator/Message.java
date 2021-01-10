@@ -1,3 +1,5 @@
+package Simulator;
+
 class Message {
     private String msg;
     private int receiver;

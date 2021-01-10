@@ -1,3 +1,5 @@
+package Simulator;
+
 import java.util.*;
 
 public class Simulation_engine {
@@ -118,9 +120,62 @@ public class Simulation_engine {
 
 
     public boolean check_output(){
-
         return Dolev_Strong_Player.check_output(designated_sender,honest_players_id, players_output);
     }
 
+    //Below are for GUI
+
+    public GUIStepCommunication GUIstep(){
+        if (active_players == null){
+            active_players = new HashSet<>(honest_players);
+        }
+        this_round = (HashSet)active_players.clone();
+        auth.update_receive(roundNumber);
+        Iterator<Player> iterable_players = active_players.iterator();
+        while(iterable_players.hasNext()){
+            iterable_players.next().action();
+        }
+        adv.attack();
+        roundNumber++;
+
+        GUIStepCommunication returnM = new GUIStepCommunication();
+        returnM.roundNumber = roundNumber;
+        returnM.messagesReceived = adv.sendInThisRound(roundNumber);
+        returnM.faultyPlayers = faulty_players_id;
+        returnM.honestPlayers = honest_players_id;
+        returnM.honestPlayersEXTR = new LinkedList<>();
+        for(int i=0;i<honest_players.size();i++){
+            Dolev_Strong_Player curP = (Dolev_Strong_Player) honest_players.get(i);
+            returnM.honestPlayersEXTR.add(curP.getEXTR());
+        }
+
+        return returnM;
+    }
+
+    public GUIOutputCommunication GUIoutput(){
+        GUIOutputCommunication returnM = new GUIOutputCommunication();
+        returnM.playersOutputs = players_output;
+        returnM.validity = Dolev_Strong_Player.check_validity(designated_sender,honest_players_id,players_output);
+        returnM.consistency = Dolev_Strong_Player.check_consistency(designated_sender,honest_players_id,players_output);
+        return returnM;
+    }
+
+}
+
+class GUIStepCommunication {
+    int roundNumber;
+    HashMap<Integer, LinkedList<Message>> messagesReceived;
+    LinkedList<Integer> faultyPlayers;
+    LinkedList<Integer> honestPlayers;
+    LinkedList<HashSet<String>> honestPlayersEXTR;
+    boolean validity;
+    boolean consistency;
+
+}
+
+class GUIOutputCommunication {
+    int[] playersOutputs;
+    String validity;
+    String consistency;
 }
 

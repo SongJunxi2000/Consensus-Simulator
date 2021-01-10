@@ -1,4 +1,4 @@
-
+package Simulator;
 
 import com.google.gson.Gson;
 
@@ -72,5 +72,21 @@ public class main {
 //        List<signedM> test = Arrays.asList(new signedM("1", 1, 1), new signedM("1",2, 2));
 //        Gson gson = new Gson();
 //        System.out.println(gson.toJson(test));
+
+        //GUIstep test
+//        GUIStepCommunication returnM = engine.GUIstep();
+//        System.out.println(returnM.roundNumber);
+//        System.out.println(returnM.honestPlayersEXTR.size());
+//
+//        for(int i=1;i<10;i++)
+//            engine.GUIstep();
+
+        //GUIouput test
+//        GUIOutputCommunication out = engine.GUIoutput();
+//        System.out.println(out.consistency);
+//        System.out.println(out.validity);
+//        System.out.println(out.playersOutputs[3]);
+//        System.out.println(engine.check_output());
+
     }
 }
