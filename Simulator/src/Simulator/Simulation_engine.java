@@ -162,20 +162,7 @@ public class Simulation_engine {
 
 }
 
-class GUIStepCommunication {
-    int roundNumber;
-    HashMap<Integer, LinkedList<Message>> messagesReceived;
-    LinkedList<Integer> faultyPlayers;
-    LinkedList<Integer> honestPlayers;
-    LinkedList<HashSet<String>> honestPlayersEXTR;
-    boolean validity;
-    boolean consistency;
 
-}
 
-class GUIOutputCommunication {
-    int[] playersOutputs;
-    String validity;
-    String consistency;
-}
+
 

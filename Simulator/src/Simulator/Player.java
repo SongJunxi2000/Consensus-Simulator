@@ -1,6 +1,7 @@
 package Simulator;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -54,7 +55,7 @@ public class Player {
     public LinkedList<signedM> parse(String msg){
         StringBuilder sb = new StringBuilder(msg);
         Gson gson = new Gson();
-        //LinkedList<Simulator.signedM> lst = gson.fromJson(msg, new TypeToken<LinkedList<Simulator.signedM>>(){}.getType());
+        //LinkedList<signedM> lst = gson.fromJson(msg, new TypeToken<LinkedList<signedM>>(){}.getType());
         LinkedList<signedM> lst = new LinkedList<signedM>();
         while (sb.length()>0) {
             String tuple = sb.substring(sb.indexOf("(")+1,sb.indexOf((")")));

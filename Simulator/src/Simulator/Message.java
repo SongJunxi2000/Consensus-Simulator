@@ -1,6 +1,6 @@
 package Simulator;
 
-public class Message {
+class Message {
     private String msg;
     private int receiver;
     private int sender;
