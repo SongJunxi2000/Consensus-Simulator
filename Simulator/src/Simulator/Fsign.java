@@ -24,7 +24,7 @@ public class Fsign {
     public void setKeys(int[] keys) {
         players_key = keys;
     }
-    //Integer: sender ID/ public key; Long: signature; Message: message to be signed
+    //Integer: sender ID/ public key; Long: signature; Simulator.Message: message to be signed
     private HashMap<Integer, HashMap<Long, String>> signed_messages;
     Random rand = new Random();
 

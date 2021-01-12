@@ -161,7 +161,7 @@
                            </children>
                         </HBox>
                         <Separator prefHeight="30.0" prefWidth="285.0" />
-                        <Label alignment="CENTER" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Message:" textAlignment="CENTER" textFill="#141414" wrapText="false">
+                        <Label alignment="CENTER" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Simulator.Message:" textAlignment="CENTER" textFill="#141414" wrapText="false">
                            <font>
                               <Font name="Kai Regular" size="18.0" fx:id="x111" />
                            </font>
@@ -210,7 +210,35 @@
           <content>
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="660.0" prefWidth="860.0">
               <children>
-                <Label fx:id="currentRound" alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Round:" textAlignment="CENTER" wrapText="false" />
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label fx:id="display_players" text="Players:">
+                                 <font>
+                                    <Font name="Kai Regular" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="display_faulty" text="Faulty Players">
+                                 <font>
+                                    <Font name="Kai Regular" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="display_delays" text="Max Delay:">
+                                 <font>
+                                    <Font name="Kai Regular" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="display_protocol" text="Protocols">
+                                 <font>
+                                    <Font name="Kai Regular" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="current_round" text="Round:">
+                                 <font>
+                                    <Font name="Kai Regular" size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
               </children>
             </AnchorPane>
           </content>

@@ -1,4 +1,5 @@
 package Simulator;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -32,7 +33,7 @@ public class Fauth {
 
     public LinkedList<Message> receive(int key, int id) {
         if (players_key[id] != key) return null;
-//        for (Message m : ready_messages.get(key))
+//        for (Simulator.Message m : ready_messages.get(key))
 //            System.out.println(m.getMsg());
         return ready_messages.get(id);
     }
