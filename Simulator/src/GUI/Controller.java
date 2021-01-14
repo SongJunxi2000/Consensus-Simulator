@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableStringValue;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -47,14 +48,31 @@ public class Controller {
     private Label content;
     @FXML
     private Label currentRound;
+    @FXML
+    private Canvas canvas;
+    @FXML
+    private Label display_players;
+    @FXML
+    private Label display_faulty;
+    @FXML
+    private Label display_delays;
+    @FXML
+    private Label display_protocol;
     public String str;
 
     public Simulation_engine engine;
+
+    private Display display;
     public void initialize(){
         protocols.getItems().setAll("Dolev Strong", "Streamlet");
     }
     @FXML
     public void saveButtonPressed(ActionEvent e){
+        System.out.println("Save Button is Pressed");
+        display_players.setText(display_players.getText()+totalPlayers.getText());
+        display_faulty.setText(display_faulty.getText()+faultyPlayers.getText());
+        display_delays.setText(display_delays.getText()+delays.getText());
+        display_protocol.setText(protocols.getValue());
         switch (protocols.getValue()){
             case "Dolev Strong":
                 engine = new Simulation_engine(Integer.parseInt( totalPlayers.getText()),
@@ -62,8 +80,11 @@ public class Controller {
                         Integer.parseInt(delays.getText()),
                         1000);
             default:
-                return;
+                break;
         }
+        display = new Display(engine.GUIstep(),canvas);
+        display.draw();
+        return;
     }
     @FXML
     public void outputButtonPressed(ActionEvent e){
@@ -73,5 +94,6 @@ public class Controller {
 
     public void stepButtonPressed(ActionEvent e){
         GUIStepCommunication returnedM = engine.GUIstep();
+
     }
 }

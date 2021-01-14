@@ -12,5 +12,4 @@ public class GUIStepCommunication {
     LinkedList<HashSet<String>> honestPlayersEXTR;
     boolean validity;
     boolean consistency;
-
 }

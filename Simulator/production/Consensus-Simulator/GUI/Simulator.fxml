@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -203,6 +204,9 @@
                            </children>
                         </HBox>
                      </children>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
                   </VBox>
           </children>
         </AnchorPane>
@@ -232,13 +236,14 @@
                                     <Font name="Kai Regular" size="13.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="current_round" text="Round:">
+                              <Label fx:id="currentRound" text="Round:">
                                  <font>
                                     <Font name="Kai Regular" size="13.0" />
                                  </font>
                               </Label>
                            </children>
                         </VBox>
+                        <Canvas fx:id="canvas" height="635.0" layoutX="1.0" width="844.0" />
               </children>
             </AnchorPane>
           </content>
