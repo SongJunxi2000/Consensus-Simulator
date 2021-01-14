@@ -69,9 +69,9 @@ public class Controller {
     @FXML
     public void saveButtonPressed(ActionEvent e){
         System.out.println("Save Button is Pressed");
-        display_players.setText(display_players.getText()+totalPlayers.getText());
-        display_faulty.setText(display_faulty.getText()+faultyPlayers.getText());
-        display_delays.setText(display_delays.getText()+delays.getText());
+        display_players.setText("Players: "+totalPlayers.getText());
+        display_faulty.setText("Faulty Players: "+faultyPlayers.getText());
+        display_delays.setText("Max Delay: "+delays.getText());
         display_protocol.setText(protocols.getValue());
         switch (protocols.getValue()){
             case "Dolev Strong":

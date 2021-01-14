@@ -10,6 +10,24 @@ public class GUIStepCommunication {
     LinkedList<Integer> faultyPlayers;
     LinkedList<Integer> honestPlayers;
     LinkedList<HashSet<String>> honestPlayersEXTR;
-    boolean validity;
-    boolean consistency;
+
+    public int getRoundNumber() {
+        return roundNumber;
+    }
+
+    public LinkedList<Integer> getFaultyPlayers() {
+        return faultyPlayers;
+    }
+
+    public LinkedList<Integer> getHonestPlayers() {
+        return honestPlayers;
+    }
+
+    public LinkedList<HashSet<String>> getHonestPlayersEXTR() {
+        return honestPlayersEXTR;
+    }
+
+    public HashMap<Integer, LinkedList<Message>> getMessagesReceived() {
+        return messagesReceived;
+    }
 }
