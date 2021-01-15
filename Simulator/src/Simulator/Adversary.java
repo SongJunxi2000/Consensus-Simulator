@@ -52,7 +52,7 @@ public class Adversary {
         unready_message.add(message);
     }
     public void attack(){
-        if(faulty_players == null)
+        if(faulty_players == null || faulty_players.size() == 0)
             return;
         Simulation_engine eng = faulty_players.getFirst().engine;
         for (int i = 0;i<numOfFaultyPlayers;i++){
