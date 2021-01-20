@@ -82,7 +82,7 @@ public class Controller {
             default:
                 break;
         }
-        display = new Display(engine.GUIstep(),canvas);
+        display = new Display(engine.GUIstep(),canvas, Integer.parseInt(totalPlayers.getText()));
         display.draw();
         return;
     }
