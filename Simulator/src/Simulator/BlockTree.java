@@ -26,7 +26,7 @@ public class BlockTree{
         Block block = new Block(m, notarized.height+1);
         map.put(Integer.toString(m.hashCode()),block);
         notarized.add(block);
-        Block prev = map.get(notarized.h);
+        Block prev = notarized.h == null ? null : map.get(notarized.h);
         finalize(prev, notarized, block);
         if (block.getHeight()>longest) {
             last = new LinkedList<>();;
@@ -37,6 +37,7 @@ public class BlockTree{
         }
     }
     public void finalize(Block first, Block second, Block last){
+        if (first == null) return;
         if (first.getEpoch() + 1  == second.e && second.getEpoch() + 1 ==last.getEpoch()){
             Block current = second;
             Block after = last;
