@@ -65,4 +65,8 @@ public class Block {
     public LinkedList<Block> getChildren(){
         return children;
     }
+    public void finalize(Block block){
+        children = new LinkedList<>();
+        children.add(block);
+    }
 }
