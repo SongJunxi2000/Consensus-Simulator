@@ -8,6 +8,7 @@ public class Fauth {
     Fsign sign;
     Adversary adv;
     private int[] players_key;
+    int roundN;
 
     public Fauth(Adversary adversary,Fsign signature) {
         sign = signature;
@@ -27,10 +28,12 @@ public class Fauth {
     }
 
     public void update_receive(int round_number){
+        roundN = round_number;
         ready_messages = adv.sendInThisRound(round_number);
     }
 
     public LinkedList<Message> receive(int key, int id) {
+        update_receive(roundN);
         if (players_key[id] != key) return null;
 //        for (Message m : ready_messages.get(key))
 //            System.out.println(m.getMsg());
