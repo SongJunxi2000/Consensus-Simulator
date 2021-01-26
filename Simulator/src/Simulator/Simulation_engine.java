@@ -54,14 +54,14 @@ public class Simulation_engine {
                     current_numeber_of_faulty_players++;
                 }
                 else {
-                    player = new Dolev_Strong_Player(
+                    player = new Streamlet_Player(
                             key, i, auth, sign, this, numOfPlayers,i == 0);
                     honest_players_id.add(i);
                     honest_players.add(player);
                 }
             }
             else{
-                player = new Dolev_Strong_Player(
+                player = new Streamlet_Player(
                         key, i, auth, sign, this, numOfPlayers,i == 0);
                 honest_players_id.add(i);
                 honest_players.add(player);
@@ -74,8 +74,9 @@ public class Simulation_engine {
         auth.setAdKeys( players_key);
         sign.setKeys(players_key);
 
-        runProtocol();
-        check_output();
+        //commend for test
+//        runProtocol();
+//        check_output();
     }
 
     public void runProtocol(){

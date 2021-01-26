@@ -10,9 +10,10 @@ public class main {
     public static void main(String[] args) {
         System.out.println("Hello World!");
 
-        Simulation_engine engine = new Simulation_engine(30,15,1,10);
-        System.out.println(engine.check_output());
-        System.out.println(engine.honest_players_id.contains(0));
+        Gson gson = new Gson();
+        Simulation_engine engine = new Simulation_engine(30,0,1,10);
+//        System.out.println(engine.check_output());
+//        System.out.println(engine.honest_players_id.contains(0));
 
         //Fsign test code starts
 //        Fsign sig = new Fsign();
@@ -87,6 +88,23 @@ public class main {
 //        System.out.println(out.validity);
 //        System.out.println(out.playersOutputs[3]);
 //        System.out.println(engine.check_output());
+
+        //Streamlet test
+        Adversary adv = new Adversary(30,10,10,20);
+        Fsign sig = engine.sign;
+        Fauth channel = engine.auth;
+        Streamlet_Player p = (Streamlet_Player) engine.honest_players.getFirst();
+        LinkedList<Player> players = engine.honest_players;
+        p.propose("test");
+//        engine.roundNumber = 1;
+        for(int i=0;i<players.size();i++){
+            Streamlet_Player temP = (Streamlet_Player) players.get(i);
+            System.out.println(i);
+            temP.vote();
+
+        }
+        p.notraize();
+        System.out.println(p.log.last.getFirst().m);
 
     }
 }
