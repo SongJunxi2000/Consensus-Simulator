@@ -11,6 +11,7 @@ public class Streamlet_Player extends Player {
     StremletM proposed;
     Block blockAfter;
     Boolean isSender = false;
+    LinkedList<Message> unprocessed_message;
 
 
     public Streamlet_Player(int key, int id, Fauth authenticate, Fsign signature, Simulation_engine engine, int num, boolean isSender) {
@@ -27,15 +28,17 @@ public class Streamlet_Player extends Player {
         for(int i=0;i<voteBlocks.size();i++){
             //cBlock = (msg,receiver,sender,sendround)
             Message cBlock = voteBlocks.get(i);
-            System.out.println(cBlock.getSender()== engine.designated_sender);
+//            System.out.println(cBlock.getSender()== engine.designated_sender);
             if(cBlock.getSender()== engine.designated_sender && sign.verification(cBlock.getMsg())){
+                voteBlocks.remove(cBlock);
+                unprocessed_message = voteBlocks;
                 System.out.println("I'm here");
                 //signM = ((h,e,txs),p,sig)
                 signedM signM = gson.fromJson(cBlock.getMsg(),signedM.class);
-                System.out.println(cBlock.getMsg());
+//                System.out.println(cBlock.getMsg());
                 //block = (h,e,txs)
                 String block = signM.msg;
-                System.out.println(block);
+//                System.out.println(block);
                 proposed = gson.fromJson(block,StremletM.class);
                 LinkedList<Block> longest = log.getLongest();
 
@@ -59,7 +62,10 @@ public class Streamlet_Player extends Player {
     }
     //if the proposed block receives more than 2n/3 votes, add it to the longest notarized chain
     public void notraize(){
-        LinkedList<Message> votes = receive();
+        LinkedList<Message> votes = unprocessed_message;
+        LinkedList<Message> received = receive();
+        if(votes!=null) votes.addAll(received);
+        else votes = received;
         int[] countVotes = new int[total_num_of_players];
         int count = 0;
         for(int i=0;i<votes.size();i++){
