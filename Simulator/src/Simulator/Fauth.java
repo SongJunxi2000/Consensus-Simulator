@@ -1,6 +1,7 @@
 package Simulator;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class Fauth {
     HashMap<Integer, LinkedList<Message>> ready_messages;// key is the receiver
@@ -13,6 +14,7 @@ public class Fauth {
     public Fauth(Adversary adversary,Fsign signature) {
         sign = signature;
         adv = adversary;
+
     }
 
     public void setAdKeys( int[] keys) {
@@ -29,7 +31,15 @@ public class Fauth {
 
     public void update_receive(int round_number){
         roundN = round_number;
-        ready_messages = adv.sendInThisRound(round_number);
+        HashMap<Integer, LinkedList<Message>> toAdd = adv.sendInThisRound(round_number);
+        if (ready_messages == null) ready_messages = toAdd;
+        else
+        for (Map.Entry<Integer, LinkedList<Message>> entry : toAdd.entrySet()){
+            int player = entry.getKey();
+            LinkedList<Message> messages = entry.getValue();
+            LinkedList<Message> temp = ready_messages.getOrDefault(player, new LinkedList<>());
+            temp.addAll((messages));
+        }
     }
 
     public LinkedList<Message> receive(int key, int id) {
@@ -37,7 +47,9 @@ public class Fauth {
         if (players_key[id] != key) return null;
 //        for (Message m : ready_messages.get(key))
 //            System.out.println(m.getMsg());
-        return ready_messages.get(id);
+        LinkedList<Message> result = ready_messages.get(id);
+        ready_messages.remove(id);
+        return result;
     }
 
 }
