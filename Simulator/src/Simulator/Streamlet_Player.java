@@ -79,7 +79,9 @@ public class Streamlet_Player extends Player {
                 }
             }
         }
+        System.out.println(votes.size());
         if(count*2/3>total_num_of_players){
+            System.out.println("what is up");
             log.add(gson.toJson(proposed),blockAfter);
         }
 
