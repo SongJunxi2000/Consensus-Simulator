@@ -21,6 +21,14 @@ public class Simulation_engine {
     private int[] players_output;
     public int designated_sender = 0;
 
+    /**
+     * Initialize a new Simulation engine which simulates Dolve-Strong protocol.
+     * @param numOfPlayers Total number of players
+     * @param numOfFaultyPlayers Maximum number of faulty players, the actual number of faulty players would
+     *                           be between 0 and the max value
+     * @param delay Maximum delay of messages
+     * @param maxRound Maximum number of rounds the simulator will simulate
+     */
     public Simulation_engine(int numOfPlayers, int numOfFaultyPlayers, int delay, int maxRound) {
         this.numOfFaultyPlayers = numOfFaultyPlayers;
         this.numOfPlayers = numOfPlayers;
@@ -38,20 +46,20 @@ public class Simulation_engine {
         sign = new Fsign();
         auth = new Fauth(adv,sign);
 
-        int current_numeber_of_faulty_players = 0;
+        int current_number_of_faulty_players = 0;
 
         for (int i = 0; i < numOfPlayers; i++) {
             int key = rand.nextInt();
             //need to change
             Player player = null;
 
-            if(current_numeber_of_faulty_players<numOfFaultyPlayers){
+            if(current_number_of_faulty_players<numOfFaultyPlayers){
                 int random = rand.nextInt(numOfPlayers);
                 if (random < numOfFaultyPlayers) {
                     player = new Player(key,i,auth,sign,this,numOfPlayers);
                     faulty_players.add(player);
                     faulty_players_id.add(i);
-                    current_numeber_of_faulty_players++;
+                    current_number_of_faulty_players++;
                 }
                 else {
                     player = new Streamlet_Player(
@@ -75,10 +83,13 @@ public class Simulation_engine {
         sign.setKeys(players_key);
 
         //commend for test
-//        runProtocol();
-//        check_output();
+        runProtocol();
+        check_output();
     }
 
+    /**
+     * Run the protocol without checking whether the outputs satisfy validity and consistency
+     */
     public void runProtocol(){
         active_players = new HashSet<>(honest_players);
         this_round = (HashSet)active_players.clone();
@@ -97,35 +108,65 @@ public class Simulation_engine {
             System.out.print(i+" ");
     }
 
+    /**
+     * The player should call this function when she tries to output something
+     * @param sender The id of the player who wants to output
+     * @param private_key The private key of the player who wants to output
+     * @param output The actual output
+     */
     public void output(int sender, int private_key, int output){
         if(check_actioner(sender, private_key)) {
             players_output[sender] = output;
         }
     }
 
+    /**
+     * Simulator checks whether the public id and private key of the player match
+     * @param sender The public id of the player
+     * @param private_key The private key of the player
+     * @return true if the id and key match, false otherwise
+     */
     private boolean check_actioner(int sender, int private_key){
         return players_key[sender] == private_key;
     }
 
+    /**
+     * Player should call this function when he wants to terminate and leave
+     * @param sender The public id og the player
+     * @param private_key The private key of the player
+     */
     public void terminate(int sender, int private_key){
         if(check_actioner(sender, private_key)){
             active_players.remove(players.get(private_key));
         }
     }
 
+    /**
+     * Player should call this function when he wants to end this round
+     * @param sender The public id og the player
+     * @param private_key The private key of the player
+     */
     public void endRound(int sender, int private_key){
         if(check_actioner(sender, private_key)){
             this_round.remove(players.get(private_key));
         }
     }
 
-
+    /**
+     * Check whether the outputs of all players satisfy validity and consistency
+     * @return true if both validity and consistency are satisfied, false otherwise
+     */
     public boolean check_output(){
         return Dolev_Strong_Player.check_output(designated_sender,honest_players_id, players_output);
     }
 
     //Below are for GUI
 
+    /**
+     * Interface for GUI. GUI should call this function when it wants to run the protocol for one round
+     * @return GUIStepCommunication class which contains all messages received by all players, list of faulty players,
+     * honest players and honest players' extraction sets
+     */
     public GUIStepCommunication GUIstep(){
         if (active_players == null){
             active_players = new HashSet<>(honest_players);
@@ -153,6 +194,10 @@ public class Simulation_engine {
         return returnM;
     }
 
+    /**
+     * Interface for GUI. GUI should call this function when requesting simulator's output
+     * @return GUIOutputCommunication class
+     */
     public GUIOutputCommunication GUIoutput(){
         GUIOutputCommunication returnM = new GUIOutputCommunication();
         returnM.playersOutputs = players_output;

@@ -9,7 +9,7 @@ public class Streamlet_Player extends Player {
     BlockTree log;
     Gson gson = new Gson();
     StremletM proposed;
-    Block blockAfter;
+    Block blockBefore;
     Boolean isSender = false;
     LinkedList<Message> unprocessed_message;
 
@@ -43,8 +43,8 @@ public class Streamlet_Player extends Player {
                 LinkedList<Block> longest = log.getLongest();
 
                 for(int j=0;j<longest.size();j++){
-                    blockAfter = longest.get(i);
-                    int curHash = blockAfter.m.hashCode();
+                    blockBefore = longest.get(i);
+                    int curHash = blockBefore.m.hashCode();
 //                    System.out.println(curHash);
 //                    System.out.println(Integer.valueOf(proposed.h));
                     if(curHash == Integer.valueOf(proposed.h)){
@@ -70,30 +70,36 @@ public class Streamlet_Player extends Player {
         int count = 0;
         for(int i=0;i<votes.size();i++){
             Message vote = votes.get(i);
+//            System.out.println(countVotes[vote.getSender()]==0);
             if(countVotes[vote.getSender()]==0 && sign.verification(vote.getMsg())){
                 signedM signM = gson.fromJson(vote.getMsg(),signedM.class);
-                if(gson.toJson(proposed).equals(signM.msg))
+                signedM pro = gson.fromJson(signM.msg,signedM.class);
+                System.out.println(gson.toJson(proposed)+" "+pro.msg);
+                if(gson.toJson(proposed).equals(pro.msg))
                 {
+                    System.out.println("count " +count);
                     countVotes[vote.getSender()]=1;
                     count++;
                 }
             }
         }
-        if(count*2/3>total_num_of_players){
-            log.add(gson.toJson(proposed),blockAfter);
+        if(count*3/2>total_num_of_players){
+            System.out.println("what is up");
+            log.add(gson.toJson(proposed),blockBefore);
         }
 
     }
     // choose the longest notarized chain, and propose the block after it.
     public void propose(String input){
         isSender = true;
-        Block longest = log.getLongest().getFirst();
-        String h = Integer.toString(longest.m.hashCode());
+        blockBefore = log.getLongest().getFirst();
+        String h = Integer.toString(blockBefore.m.hashCode());
         int e = engine.roundNumber;
-        StremletM proposed = new StremletM(h,e,input);
+        proposed = new StremletM(h,e,input);
         String msg = gson.toJson(proposed);
+        String signedMsg = sign(msg);
         for(int i = 0;i<total_num_of_players;i++){
-            send(sign(msg),i,e);
+            send(signedMsg,i,e);
         }
     }
 
