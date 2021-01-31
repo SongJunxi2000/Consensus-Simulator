@@ -1,5 +1,6 @@
-package Simulator;
+package Protocol;
 
+import Simulator.*;
 import com.google.gson.Gson;
 
 import java.util.LinkedList;
@@ -112,6 +113,10 @@ public class Streamlet_Player extends Player {
             isSender = false;
         vote();
         notraize();
+    }
+
+    public BlockTree getLog() {
+        return log;
     }
 }
 class StremletM{

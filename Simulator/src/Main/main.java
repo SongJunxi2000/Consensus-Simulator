@@ -1,10 +1,14 @@
-package Simulator;
+package Main;
 
+import Protocol.Player;
+import Protocol.Streamlet_Player;
+import Simulator.Adversary;
+import Simulator.Fauth;
+import Simulator.Fsign;
+import Simulator.Simulation_engine;
 import com.google.gson.Gson;
 
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 
 public class main {
     public static void main(String[] args) {
@@ -93,8 +97,8 @@ public class main {
         Adversary adv = new Adversary(30,10,10,20);
         Fsign sig = engine.sign;
         Fauth channel = engine.auth;
-        Streamlet_Player p = (Streamlet_Player) engine.honest_players.getFirst();
-        LinkedList<Player> players = engine.honest_players;
+        Streamlet_Player p = (Streamlet_Player) engine.getHonest_players().getFirst();
+        LinkedList<Player> players = engine.getHonest_players();
         p.propose("test");
 //        engine.roundNumber = 1;
         for(int i=0;i<players.size();i++){
@@ -104,7 +108,7 @@ public class main {
 
         }
         p.notraize();
-        System.out.println(p.log.last.getFirst().m);
+        System.out.println(p.getLog().getLongest().getFirst().toString());
 
     }
 }

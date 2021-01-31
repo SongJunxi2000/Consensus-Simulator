@@ -1,15 +1,21 @@
-package Simulator;
+package utils;
+
+import Simulator.Message;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 
 public class GUIStepCommunication {
-    int roundNumber;
-    HashMap<Integer, LinkedList<Message>> messagesReceived;
-    LinkedList<Integer> faultyPlayers;
-    LinkedList<Integer> honestPlayers;
-    LinkedList<HashSet<String>> honestPlayersEXTR;
+    public int roundNumber;
+    public HashMap<Integer, LinkedList<Message>> messagesReceived;
+    public LinkedList<Integer> faultyPlayers;
+    public LinkedList<Integer> honestPlayers;
+    public LinkedList<HashSet<String>> honestPlayersEXTR;
+
+    public GUIStepCommunication(){
+
+    }
 
     public int getRoundNumber() {
         return roundNumber;

@@ -1,5 +1,11 @@
 package Simulator;
 
+import Protocol.Dolev_Strong_Player;
+import Protocol.Player;
+import Protocol.Streamlet_Player;
+import utils.GUIOutputCommunication;
+import utils.GUIStepCommunication;
+
 import java.util.*;
 
 public class Simulation_engine {
@@ -199,13 +205,13 @@ public class Simulation_engine {
      * @return GUIOutputCommunication class
      */
     public GUIOutputCommunication GUIoutput(){
-        GUIOutputCommunication returnM = new GUIOutputCommunication();
-        returnM.playersOutputs = players_output;
-        returnM.validity = Dolev_Strong_Player.check_validity(designated_sender,honest_players_id,players_output);
-        returnM.consistency = Dolev_Strong_Player.check_consistency(designated_sender,honest_players_id,players_output);
-        return returnM;
+        return new GUIOutputCommunication( players_output, Dolev_Strong_Player.check_validity(designated_sender,honest_players_id,players_output),
+                Dolev_Strong_Player.check_consistency(designated_sender,honest_players_id,players_output));
     }
 
+    public LinkedList<Player> getHonest_players() {
+        return honest_players;
+    }
 }
 
 

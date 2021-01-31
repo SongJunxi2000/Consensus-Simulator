@@ -1,19 +1,13 @@
 package GUI;
-import Simulator.GUIStepCommunication;
-import Simulator.Player;
-import Simulator.Simulation_engine;
+import utils.GUIStepCommunication;
+import Protocol.Player;
 import javafx.event.EventHandler;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.GestureEvent;
 import javafx.scene.input.ZoomEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextBoundsType;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

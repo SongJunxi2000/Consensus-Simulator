@@ -1,10 +1,7 @@
 package GUI;
 
-import Simulator.GUIStepCommunication;
+import utils.GUIStepCommunication;
 import Simulator.Simulation_engine;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableStringValue;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -12,8 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-
-import javax.swing.*;
 
 public class Controller {
     @FXML

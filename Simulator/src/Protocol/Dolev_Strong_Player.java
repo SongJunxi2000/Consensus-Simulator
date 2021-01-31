@@ -1,4 +1,6 @@
-package Simulator;
+package Protocol;
+import Protocol.Player;
+import Simulator.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -89,7 +91,7 @@ public class Dolev_Strong_Player extends Player {
         return EXTR;
     }
 
-    static boolean check_output(int designated_sender, LinkedList<Integer> honest_players_id, int[] outputs){
+    public static boolean check_output(int designated_sender, LinkedList<Integer> honest_players_id, int[] outputs){
         Iterator honest_player = honest_players_id.iterator();
         int bit = outputs[(int)honest_players_id.getFirst()];
         if(honest_players_id.contains(designated_sender)){
@@ -101,12 +103,12 @@ public class Dolev_Strong_Player extends Player {
         return true;
     }
 
-    static String check_validity(int designated_sender, LinkedList<Integer> honest_players_id, int[] outputs){
+    public static String check_validity(int designated_sender, LinkedList<Integer> honest_players_id, int[] outputs){
         if(!honest_players_id.contains(designated_sender)) return "NA";
         return Boolean.toString(check_output(designated_sender, honest_players_id, outputs));
     }
 
-    static String check_consistency(int designated_sender, LinkedList<Integer> honest_players_id, int[] outputs){
+    public static String check_consistency(int designated_sender, LinkedList<Integer> honest_players_id, int[] outputs){
         if(honest_players_id == null) return "false";
         int bit = outputs[honest_players_id.getFirst()];
         for(int i = 1;i<honest_players_id.size();i++){

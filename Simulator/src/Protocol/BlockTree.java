@@ -1,6 +1,4 @@
-package Simulator;
-
-import com.google.gson.Gson;
+package Protocol;
 
 import java.util.HashMap;
 import java.util.LinkedList;
