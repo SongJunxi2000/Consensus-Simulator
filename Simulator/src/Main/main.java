@@ -1,11 +1,7 @@
 package Main;
 
-import Protocol.Player;
-import Protocol.Streamlet_Player;
-import Simulator.Adversary;
-import Simulator.Fauth;
-import Simulator.Fsign;
-import Simulator.Simulation_engine;
+import Protocol.*;
+import Simulator.*;
 import com.google.gson.Gson;
 
 import java.util.LinkedList;
@@ -15,8 +11,8 @@ public class main {
         System.out.println("Hello World!");
 
         Gson gson = new Gson();
-        Simulation_engine engine = new Simulation_engine(30,0,1,10);
-//        System.out.println(engine.check_output());
+        Simulation_engine engine = new Simulation_engine(30,20,1,10);
+        System.out.println(engine.check_output());
 //        System.out.println(engine.honest_players_id.contains(0));
 
         //Fsign test code starts
@@ -39,7 +35,7 @@ public class main {
 
 
         //Fauth test starts
-//        Adversary adv = new Adversary(30,10,10,20);
+//        Dolev_Strong_Adversary adv = new Dolev_Strong_Adversary(30,0,1,10);
 //        Fsign sig = new Fsign();
 //        Fauth channel = new Fauth(adv,sig);
 //        sig.setKeys(new int[]{0,1,2,3,4});
@@ -94,21 +90,21 @@ public class main {
 //        System.out.println(engine.check_output());
 
         //Streamlet test
-        Adversary adv = new Adversary(30,10,10,20);
-        Fsign sig = engine.sign;
-        Fauth channel = engine.auth;
-        Streamlet_Player p = (Streamlet_Player) engine.getHonest_players().getFirst();
-        LinkedList<Player> players = engine.getHonest_players();
-        p.propose("test");
-//        engine.roundNumber = 1;
-        for(int i=0;i<players.size();i++){
-            Streamlet_Player temP = (Streamlet_Player) players.get(i);
-            System.out.println(i);
-            temP.vote();
-
-        }
-        p.notraize();
-        System.out.println(p.getLog().getLongest().getFirst().toString());
+//        Dolev_Strong_Adversary adv = new Dolev_Strong_Adversary(30,10,10,20);
+//        Fsign sig = engine.sign;
+//        Fauth channel = engine.auth;
+//        Streamlet_Player p = (Streamlet_Player) engine.getHonest_players().getFirst();
+//        LinkedList<Player> players = engine.getHonest_players();
+//        p.propose("test");
+////        engine.roundNumber = 1;
+//        for(int i=0;i<players.size();i++){
+//            Streamlet_Player temP = (Streamlet_Player) players.get(i);
+//            System.out.println(i);
+//            temP.vote();
+//
+//        }
+//        p.notraize();
+//        System.out.println(p.getLog().getLongest().getFirst().toString());
 
     }
 }

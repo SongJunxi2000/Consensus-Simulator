@@ -1,5 +1,6 @@
 package Simulator;
 
+import Protocol.Dolev_Strong_Adversary;
 import Protocol.Dolev_Strong_Player;
 import Protocol.Player;
 import Protocol.Streamlet_Player;
@@ -48,7 +49,7 @@ public class Simulation_engine {
         honest_players = new LinkedList<>();
         players_output = new int[numOfPlayers];
 
-        adv = new Adversary(numOfPlayers,numOfFaultyPlayers, delay, maxRound);
+        adv = new Dolev_Strong_Adversary(numOfPlayers,numOfFaultyPlayers, delay, maxRound);
         sign = new Fsign();
         auth = new Fauth(adv,sign);
 
@@ -68,14 +69,14 @@ public class Simulation_engine {
                     current_number_of_faulty_players++;
                 }
                 else {
-                    player = new Streamlet_Player(
+                    player = new Dolev_Strong_Player(
                             key, i, auth, sign, this, numOfPlayers,i == 0);
                     honest_players_id.add(i);
                     honest_players.add(player);
                 }
             }
             else{
-                player = new Streamlet_Player(
+                player = new Dolev_Strong_Player(
                         key, i, auth, sign, this, numOfPlayers,i == 0);
                 honest_players_id.add(i);
                 honest_players.add(player);

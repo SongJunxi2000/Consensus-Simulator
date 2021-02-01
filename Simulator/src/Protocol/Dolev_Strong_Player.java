@@ -16,8 +16,13 @@ public class Dolev_Strong_Player extends Player {
     public void receive_input(){
         if (isSender && engine.roundNumber == 0){
             EXTR.add("1");
+            String signedM = sign("1");
             for (int i = 0; i < engine.numOfPlayers; i++)
-                send(sign("1"),i,round_number);
+            {
+                send(signedM,i,round_number);
+//                System.out.println("send the message to everyone");
+            }
+
         }
     }
     public ArrayList<String> valid_msg(String message){
@@ -68,7 +73,7 @@ public class Dolev_Strong_Player extends Player {
         receive_input();
         update_round();
         LinkedList<Message> messages = receive();
-        //if (messages == null) System.out.print(round_number);
+//        if (messages == null) System.out.print(round_number);
         while (messages!=null&&messages.peek() != null) {
             Message msg = messages.remove();
             ArrayList<String> valid_msg = valid_msg(msg.getMsg());

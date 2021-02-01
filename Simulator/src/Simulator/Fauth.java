@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Map;
 
 public class Fauth {
-    HashMap<Integer, LinkedList<Message>> ready_messages;// key is the receiver
+    HashMap<Integer, LinkedList<Message>> ready_messages;// key is the receiver id
     LinkedList<Message> unready_message;
     Fsign sign;
     Adversary adv;
@@ -55,6 +55,8 @@ public class Fauth {
     public void update_receive(int round_number){
         roundN = round_number;
         HashMap<Integer, LinkedList<Message>> toAdd = adv.sendInThisRound(round_number);
+//        if(toAdd.get(3) == null) System.out.println("this is null");
+//        else System.out.println("this is not null");
         if (ready_messages == null) ready_messages = toAdd;
         else
         for (Map.Entry<Integer, LinkedList<Message>> entry : toAdd.entrySet()){
@@ -62,7 +64,10 @@ public class Fauth {
             LinkedList<Message> messages = entry.getValue();
             LinkedList<Message> temp = ready_messages.getOrDefault(player, new LinkedList<>());
             temp.addAll((messages));
+            ready_messages.put(player,temp);
         }
+//        if(ready_messages.get(3) == null) System.out.println("this is null QAQ");
+//        else System.out.println("this is not null QAQ");
     }
 
     /**
@@ -77,6 +82,8 @@ public class Fauth {
 //        for (Message m : ready_messages.get(key))
 //            System.out.println(m.getMsg());
         LinkedList<Message> result = ready_messages.get(id);
+//        if(result == null) System.out.println("message is null?");
+//        else System.out.println("it's not null!");
         ready_messages.remove(id);
         return result;
     }
