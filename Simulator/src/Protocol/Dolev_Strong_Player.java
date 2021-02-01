@@ -1,5 +1,5 @@
 package Protocol;
-import Protocol.Player;
+import Simulator.Player;
 import Simulator.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,8 +19,7 @@ public class Dolev_Strong_Player extends Player {
             String signedM = sign("1");
             for (int i = 0; i < engine.numOfPlayers; i++)
             {
-                send(signedM,i,round_number);
-//                System.out.println("send the message to everyone");
+                send(signedM,i,round_number+1);
             }
 
         }
@@ -73,20 +72,18 @@ public class Dolev_Strong_Player extends Player {
         receive_input();
         update_round();
         LinkedList<Message> messages = receive();
-//        if (messages == null) System.out.print(round_number);
         while (messages!=null&&messages.peek() != null) {
             Message msg = messages.remove();
             ArrayList<String> valid_msg = valid_msg(msg.getMsg());
-            //System.out.println(valid_msg.size());
             for (String message : valid_msg)
                 if (!EXTR.contains(message)) {
                     EXTR.add(message);
-                    for (int i = 0; i < engine.numOfPlayers; i++)
-                        send(msg.getMsg()+','+sign(message),i,round_number);
+                    for (int i = 0; i < engine.numOfPlayers; i++) {
+                        send(msg.getMsg() + ',' + sign(message), i, round_number + 1);
+                    }
                 }
         }
         if (round_number == engine.maxRound - 1) {
-            //System.out.println(EXTR.size());
             if (EXTR.size() == 1) output(Integer.parseInt(EXTR.iterator().next()));
             else output(0);
         }

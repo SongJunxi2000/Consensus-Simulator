@@ -28,7 +28,6 @@ public class Dolev_Strong_Adversary implements Adversary {
         numOfFaultyPlayers = f_id.size();
     }
     public HashMap<Integer, LinkedList<Message>> sendInThisRound(int round_number){
-        attack();
 
         Iterator um_iterator = unready_message.iterator();
         LinkedList<Message> tem = new LinkedList<>();
@@ -37,7 +36,6 @@ public class Dolev_Strong_Adversary implements Adversary {
             Message msg = (Message) um_iterator.next();
             if(msg.getSendRound()>round_number){
                 tem.add(msg);
-//                System.out.println("shouldn't be here"+round_number);
             }
             else{
                 LinkedList<Message> list = ready_messages.getOrDefault(msg.getReceiver(),new LinkedList<Message>());
@@ -62,12 +60,13 @@ public class Dolev_Strong_Adversary implements Adversary {
             if(faulty_players_id.get(i) == 0)
                 desig_sender = faulty_players.get(i);
         }
-        if(desig_sender == null) return;
+        if(desig_sender == null ) return;
         if(eng.roundNumber == 0){
             for(int i=0;i<numOfPlayers;i++){
                 desig_sender.send(desig_sender.sign("1"),i,0);
             }
         }
+        if( eng.roundNumber!=maxRound-2) return;
         int honest_target = 0;
         while(faulty_players_id.contains(honest_target))
             honest_target++;
@@ -78,7 +77,7 @@ public class Dolev_Strong_Adversary implements Adversary {
         msg = msg.substring(1);
 
         faulty_players.getFirst().send(msg,honest_target,maxRound-1);
-        System.out.println(honest_target);
+        System.out.println(honest_target+" "+eng.roundNumber);
         System.out.println(msg);
 
     }

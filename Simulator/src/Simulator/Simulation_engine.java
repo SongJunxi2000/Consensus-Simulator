@@ -2,10 +2,6 @@ package Simulator;
 
 import Protocol.Dolev_Strong_Adversary;
 import Protocol.Dolev_Strong_Player;
-import Protocol.Player;
-import Protocol.Streamlet_Player;
-import utils.GUIOutputCommunication;
-import utils.GUIStepCommunication;
 
 import java.util.*;
 
@@ -57,7 +53,6 @@ public class Simulation_engine {
 
         for (int i = 0; i < numOfPlayers; i++) {
             int key = rand.nextInt();
-            //need to change
             Player player = null;
 
             if(current_number_of_faulty_players<numOfFaultyPlayers){
@@ -89,7 +84,6 @@ public class Simulation_engine {
         auth.setAdKeys( players_key);
         sign.setKeys(players_key);
 
-        //commend for test
         runProtocol();
         check_output();
     }
@@ -108,6 +102,7 @@ public class Simulation_engine {
             while(iterable_players.hasNext()){
                 iterable_players.next().action();
             }
+
             adv.attack();
 
         }
@@ -167,52 +162,6 @@ public class Simulation_engine {
         return Dolev_Strong_Player.check_output(designated_sender,honest_players_id, players_output);
     }
 
-    //Below are for GUI
-
-    /**
-     * Interface for GUI. GUI should call this function when it wants to run the protocol for one round
-     * @return GUIStepCommunication class which contains all messages received by all players, list of faulty players,
-     * honest players and honest players' extraction sets
-     */
-    public GUIStepCommunication GUIstep(){
-        if (active_players == null){
-            active_players = new HashSet<>(honest_players);
-        }
-        this_round = (HashSet)active_players.clone();
-        auth.update_receive(roundNumber);
-        Iterator<Player> iterable_players = active_players.iterator();
-        while(iterable_players.hasNext()){
-            iterable_players.next().action();
-        }
-        adv.attack();
-        roundNumber++;
-
-        GUIStepCommunication returnM = new GUIStepCommunication();
-        returnM.roundNumber = roundNumber;
-        returnM.messagesReceived = adv.sendInThisRound(roundNumber);
-        returnM.faultyPlayers = faulty_players_id;
-        returnM.honestPlayers = honest_players_id;
-        returnM.honestPlayersEXTR = new LinkedList<>();
-        for(int i=0;i<honest_players.size();i++){
-            Dolev_Strong_Player curP = (Dolev_Strong_Player) honest_players.get(i);
-            returnM.honestPlayersEXTR.add(curP.getEXTR());
-        }
-
-        return returnM;
-    }
-
-    /**
-     * Interface for GUI. GUI should call this function when requesting simulator's output
-     * @return GUIOutputCommunication class
-     */
-    public GUIOutputCommunication GUIoutput(){
-        return new GUIOutputCommunication( players_output, Dolev_Strong_Player.check_validity(designated_sender,honest_players_id,players_output),
-                Dolev_Strong_Player.check_consistency(designated_sender,honest_players_id,players_output));
-    }
-
-    public LinkedList<Player> getHonest_players() {
-        return honest_players;
-    }
 }
 
 

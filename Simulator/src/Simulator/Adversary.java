@@ -1,7 +1,5 @@
 package Simulator;
 
-import Protocol.Player;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 

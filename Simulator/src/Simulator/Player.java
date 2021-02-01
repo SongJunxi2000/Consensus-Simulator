@@ -1,4 +1,4 @@
-package Protocol;
+package Simulator;
 
 import Simulator.*;
 import com.google.gson.Gson;
