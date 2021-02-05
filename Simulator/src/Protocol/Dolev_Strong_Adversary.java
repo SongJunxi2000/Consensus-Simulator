@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class Dolev_Strong_Adversary implements Adversary {
+public class Dolev_Strong_Adversary extends Adversary {
     HashMap<Integer, LinkedList<Message>> ready_messages = new HashMap<Integer, LinkedList<Message>>();;
     LinkedList<Message> unready_message = new LinkedList<Message>();
     LinkedList<Player> faulty_players;
@@ -17,10 +17,8 @@ public class Dolev_Strong_Adversary implements Adversary {
     int maxRound;
     Player desig_sender;
     public Dolev_Strong_Adversary(int numOfPlayers, int numOfFaultyPlayers, int delay, int maxRound){
-        this.numOfPlayers = numOfPlayers;
-        this.numOfFaultyPlayers = numOfFaultyPlayers;
-        this.delay = delay;
-        this.maxRound = maxRound;
+        super(numOfPlayers,numOfFaultyPlayers,delay,maxRound);
+
     }
     public void setFaultyPlayers(LinkedList<Player> faulty_players_given, LinkedList<Integer> f_id){
         this.faulty_players_id = f_id;
