@@ -4,6 +4,16 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public interface Adversary {
+    HashMap<Integer, LinkedList<Message>> ready_messages = new HashMap<>();
+    LinkedList<Message> unready_message = new LinkedList<Message>();
+    LinkedList<Player> faulty_players = new LinkedList<>();
+    LinkedList<Integer> faulty_players_id = new LinkedList<>();
+    int numOfPlayers = 0;
+    int numOfFaultyPlayers = 0;
+    int delay = 1;
+    int maxRound = 0;
+    Player desig_sender = null;
+
     /**
      * After Simulation engine generates all faulty players, it will pass all faulty players to the adversary.
      * @param faulty_players_given A linked list of all faulty players
