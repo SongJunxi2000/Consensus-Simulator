@@ -22,6 +22,7 @@ public class Dummy_Adversary extends Adversary {
     public Dummy_Adversary (int numOfPlayers, int numOfFaultyPlayers, int delay, int maxRound){
         super(numOfPlayers, numOfFaultyPlayers, delay, maxRound);
     }
+    @Override
     public HashMap<Integer, LinkedList<Message>> sendInThisRound(int round_number){
 
         Iterator um_iterator = unready_message.iterator();

@@ -39,7 +39,7 @@ public class Adversary {
      * @return A hash map which maps the public id of the player to a linked list of messages she will
      *      * receive in the given round.
      */
-    HashMap<Integer, LinkedList<Message>> sendInThisRound(int round_number){
+    public HashMap<Integer, LinkedList<Message>> sendInThisRound(int round_number){
         //To overwrite in actual adversary
         return null;
     }
@@ -49,7 +49,7 @@ public class Adversary {
      * @param message The message created by authenticated channel
      */
     void receive(Message message){
-        //To overwrite in actual adversary};
+        unready_message.add(message);
     }
 
     /**

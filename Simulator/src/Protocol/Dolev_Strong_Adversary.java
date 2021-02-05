@@ -47,9 +47,6 @@ public class Dolev_Strong_Adversary extends Adversary {
         ready_messages = new HashMap<Integer, LinkedList<Message>>();
         return temp;
     }
-    public void receive(Message message){
-        unready_message.add(message);
-    }
     public void attack(){
         if(faulty_players == null || faulty_players.size() == 0)
             return;

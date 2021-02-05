@@ -44,6 +44,7 @@ public class Dummy_Player extends Player {
         else{
             update_round();
             if(round_number != 0 && round_number<=3){
+                System.out.println((round_number));
                 LinkedList<Message> received = receive();
                 for(int i=0;i<received.size();i++){
                     Message message = received.get(i);
@@ -59,6 +60,7 @@ public class Dummy_Player extends Player {
                 }
             }
             if(round_number ==3 ){
+                System.out.println(count);
                 if(count>=0) output(1);
                 else output(0);
                 terminate();

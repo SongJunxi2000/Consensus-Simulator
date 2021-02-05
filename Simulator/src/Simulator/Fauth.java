@@ -73,7 +73,7 @@ public class Fauth {
     public LinkedList<Message> receive(int key, int id) {
         update_receive(roundN);
         if (players_key[id] != key) return null;
-        LinkedList<Message> result = ready_messages.get(id);
+        LinkedList<Message> result = ready_messages.getOrDefault(id,new LinkedList<>());
         ready_messages.remove(id);
         return result;
     }

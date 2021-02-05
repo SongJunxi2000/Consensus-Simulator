@@ -21,9 +21,9 @@ public class Player {
      * Initialize a player.
      * @param key The private key of this player
      * @param id The public id of this player
-     * @param authenticate The authenticate channel which the player uses to send and receive messages
+     * @param authenticate The authenticate channel which the player uses to send and  messages
      * @param signature The signature model which the player uses to sign and verify messages
-     * @param engine The simulation engine
+     * @param engine The simulation enginereceive
      * @param num Total number of players
      */
     public Player(int key, int id, Fauth authenticate, Fsign signature, Simulation_engine engine, int num) {
@@ -57,7 +57,7 @@ public class Player {
      * @return A linked list of Message objects
      */
     public LinkedList<Message> receive() {
-        return auth. receive(player_private_key, player_id);
+        return auth.receive(player_private_key, player_id);
     }
 
     /**
