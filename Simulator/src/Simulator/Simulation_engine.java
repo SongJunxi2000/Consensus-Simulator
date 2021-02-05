@@ -1,7 +1,7 @@
 package Simulator;
 
-import Protocol.Dolev_Strong_Adversary;
-import Protocol.Dolev_Strong_Player;
+import Protocol.Dummy_Adversary;
+import Protocol.Dummy_Player;
 
 import java.util.*;
 
@@ -45,7 +45,7 @@ public class Simulation_engine {
         honest_players = new LinkedList<>();
         players_output = new int[numOfPlayers];
 
-        adv = new Dolev_Strong_Adversary(numOfPlayers,numOfFaultyPlayers, delay, maxRound);
+        adv = new Dummy_Adversary(numOfPlayers,numOfFaultyPlayers, delay, maxRound);
         sign = new Fsign();
         auth = new Fauth(adv,sign);
 
@@ -58,21 +58,21 @@ public class Simulation_engine {
             if(current_number_of_faulty_players<numOfFaultyPlayers){
                 int random = rand.nextInt(numOfPlayers);
                 if (random < numOfFaultyPlayers) {
-                    player = new Player(key,i,auth,sign,this,numOfPlayers);
+                    player = new Dummy_Player(key,i,auth,sign,this,numOfPlayers, i == 0);
                     faulty_players.add(player);
                     faulty_players_id.add(i);
                     current_number_of_faulty_players++;
                 }
                 else {
-                    player = new Dolev_Strong_Player(
-                            key, i, auth, sign, this, numOfPlayers,i == 0);
+                    player = new Dummy_Player(
+                            key, i, auth, sign, this, numOfPlayers, i==0);
                     honest_players_id.add(i);
                     honest_players.add(player);
                 }
             }
             else{
-                player = new Dolev_Strong_Player(
-                        key, i, auth, sign, this, numOfPlayers,i == 0);
+                player = new Dummy_Player(
+                        key, i, auth, sign, this, numOfPlayers,i==0);
                 honest_players_id.add(i);
                 honest_players.add(player);
             }
@@ -98,7 +98,7 @@ public class Simulation_engine {
         for(int i=0;i<maxRound;i++){
             roundNumber = i;
             auth.update_receive(roundNumber);
-            Iterator<Player> iterable_players = active_players.iterator();
+            Iterator<Player> iterable_players = this_round.iterator();
             while(iterable_players.hasNext()){
                 iterable_players.next().action();
             }
@@ -159,7 +159,7 @@ public class Simulation_engine {
      * @return true if both validity and consistency are satisfied, false otherwise
      */
     public boolean check_output(){
-        return Dolev_Strong_Player.check_output(designated_sender,honest_players_id, players_output);
+        return Dummy_Player.check_output(designated_sender,honest_players_id, players_output);
     }
 
 }
