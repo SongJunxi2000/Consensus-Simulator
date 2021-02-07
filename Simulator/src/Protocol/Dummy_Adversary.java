@@ -9,19 +9,17 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 
+/**
+ * This dummy adversary works as follow:
+ * It randomly decides how long the message needs to delay for this round, and if the delay is larger than max delay
+ * it will deliver this message, other wise the message is delayed until the next round.
+ */
 public class Dummy_Adversary extends Adversary {
-    HashMap<Integer, LinkedList<Message>> ready_messages = new HashMap<Integer, LinkedList<Message>>();;
-    LinkedList<Message> unready_message = new LinkedList<Message>();
-    LinkedList<Player> faulty_players;
-    LinkedList<Integer> faulty_players_id;
-    int numOfPlayers;
-    int numOfFaultyPlayers;
-    int delay;
-    int maxRound;
-    Player desig_sender;
+
     public Dummy_Adversary (int numOfPlayers, int numOfFaultyPlayers, int delay, int maxRound){
         super(numOfPlayers, numOfFaultyPlayers, delay, maxRound);
     }
+
     @Override
     public HashMap<Integer, LinkedList<Message>> sendInThisRound(int round_number){
 
@@ -30,8 +28,8 @@ public class Dummy_Adversary extends Adversary {
 
         while (um_iterator.hasNext()){
             Message msg = (Message) um_iterator.next();
-            int delay = (int) (Math.random()*2);
-            if(msg.getSendRound()>round_number+delay && msg.getSendRound()+delay < round_number){
+            int delay = (int) (Math.random()*maxDelay);
+            if( msg.getSendRound()+delay > round_number){
                 tem.add(msg);
             }
             else{

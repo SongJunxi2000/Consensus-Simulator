@@ -7,24 +7,24 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Dolev_Strong_Adversary extends Adversary {
-    HashMap<Integer, LinkedList<Message>> ready_messages = new HashMap<Integer, LinkedList<Message>>();;
-    LinkedList<Message> unready_message = new LinkedList<Message>();
-    LinkedList<Player> faulty_players;
-    LinkedList<Integer> faulty_players_id;
-    int numOfPlayers;
-    int numOfFaultyPlayers;
-    int delay;
-    int maxRound;
-    Player desig_sender;
+//    HashMap<Integer, LinkedList<Message>> ready_messages = new HashMap<Integer, LinkedList<Message>>();;
+//    LinkedList<Message> unready_message = new LinkedList<Message>();
+//    LinkedList<Player> faulty_players;
+//    LinkedList<Integer> faulty_players_id;
+//    int numOfPlayers;
+//    int numOfFaultyPlayers;
+//    int delay;
+//    int maxRound;
+//    Player desig_sender;
     public Dolev_Strong_Adversary(int numOfPlayers, int numOfFaultyPlayers, int delay, int maxRound){
         super(numOfPlayers,numOfFaultyPlayers,delay,maxRound);
 
     }
-    public void setFaultyPlayers(LinkedList<Player> faulty_players_given, LinkedList<Integer> f_id){
-        this.faulty_players_id = f_id;
-        this.faulty_players = faulty_players_given;
-        numOfFaultyPlayers = f_id.size();
-    }
+//    public void setFaultyPlayers(LinkedList<Player> faulty_players_given, LinkedList<Integer> f_id){
+//        this.faulty_players_id = f_id;
+//        this.faulty_players = faulty_players_given;
+//        numOfFaultyPlayers = f_id.size();
+//    }
     public HashMap<Integer, LinkedList<Message>> sendInThisRound(int round_number){
 
         Iterator um_iterator = unready_message.iterator();

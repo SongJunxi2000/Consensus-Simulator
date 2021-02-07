@@ -11,7 +11,7 @@ public class main {
         System.out.println("Hello World!");
 
         Gson gson = new Gson();
-        Simulation_engine engine = new Simulation_engine(30,20,1,10);
+        Simulation_engine engine = new Simulation_engine(30,10,3,10);
         System.out.println(engine.check_output());
 //        System.out.println(engine.honest_players_id.contains(0));
 

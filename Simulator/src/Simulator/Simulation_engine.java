@@ -84,6 +84,7 @@ public class Simulation_engine {
         auth.setAdKeys( players_key);
         sign.setKeys(players_key);
 
+        active_players = new HashSet<>(honest_players);
         runProtocol();
         check_output();
     }
@@ -92,10 +93,9 @@ public class Simulation_engine {
      * Run the protocol without checking whether the outputs satisfy validity and consistency
      */
     public void runProtocol(){
-        active_players = new HashSet<>(honest_players);
-        this_round = (HashSet)active_players.clone();
 
         for(int i=0;i<maxRound;i++){
+            this_round = (HashSet)active_players.clone();
             roundNumber = i;
             auth.update_receive(roundNumber);
             Iterator<Player> iterable_players = this_round.iterator();
