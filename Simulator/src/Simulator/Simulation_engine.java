@@ -1,7 +1,6 @@
 package Simulator;
 
-import Protocol.Dummy_Adversary;
-import Protocol.Dummy_Player;
+import Protocol.*;
 
 import java.util.*;
 
@@ -45,7 +44,7 @@ public class Simulation_engine {
         honest_players = new LinkedList<>();
         players_output = new int[numOfPlayers];
 
-        adv = new Dummy_Adversary(numOfPlayers,numOfFaultyPlayers, delay, maxRound);
+        adv = new Default_Adversary(numOfPlayers,numOfFaultyPlayers, delay, maxRound);
         sign = new Fsign();
         auth = new Fauth(adv,sign);
 
@@ -58,20 +57,20 @@ public class Simulation_engine {
             if(current_number_of_faulty_players<numOfFaultyPlayers){
                 int random = rand.nextInt(numOfPlayers);
                 if (random < numOfFaultyPlayers) {
-                    player = new Dummy_Player(key,i,auth,sign,this,numOfPlayers, i == 0);
+                    player = new Majority_Vote_Player(key,i,auth,sign,this,numOfPlayers, i == 0);
                     faulty_players.add(player);
                     faulty_players_id.add(i);
                     current_number_of_faulty_players++;
                 }
                 else {
-                    player = new Dummy_Player(
+                    player = new Majority_Vote_Player(
                             key, i, auth, sign, this, numOfPlayers, i==0);
                     honest_players_id.add(i);
                     honest_players.add(player);
                 }
             }
             else{
-                player = new Dummy_Player(
+                player = new Majority_Vote_Player(
                         key, i, auth, sign, this, numOfPlayers,i==0);
                 honest_players_id.add(i);
                 honest_players.add(player);
@@ -102,7 +101,6 @@ public class Simulation_engine {
             while(iterable_players.hasNext()){
                 iterable_players.next().action();
             }
-
             adv.attack();
 
         }
@@ -159,7 +157,7 @@ public class Simulation_engine {
      * @return true if both validity and consistency are satisfied, false otherwise
      */
     public boolean check_output(){
-        return Dummy_Player.check_output(designated_sender,honest_players_id, players_output);
+        return Majority_Vote_Player.check_output(designated_sender,honest_players_id, players_output);
     }
 
 }

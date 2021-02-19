@@ -15,7 +15,7 @@ import java.util.Random;
  * Then she outputs # of 1's minus # of 0's. The protocol checks whether the designated sender's output is correct.
  * If the designated sender is dishonest, the protocol doesn't do any check but simply outputs "true".
  */
-public class Dummy_Player extends Player {
+public class Default_Player extends Player {
 
     boolean isSender;
     boolean[] votedP;
@@ -31,7 +31,7 @@ public class Dummy_Player extends Player {
      * @param engine       The simulation engine
      * @param num          Total number of players
      */
-    public Dummy_Player(int key, int id, Fauth authenticate, Fsign signature, Simulation_engine engine, int num, boolean isSender) {
+    public Default_Player(int key, int id, Fauth authenticate, Fsign signature, Simulation_engine engine, int num, boolean isSender) {
         super(key, id, authenticate, signature, engine, num);
         this.isSender = isSender;
         votedP = new boolean[total_num_of_players];

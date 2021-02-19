@@ -14,9 +14,9 @@ import java.util.Random;
  * It randomly decides how long the message needs to delay for this round, and if the delay is larger than max delay
  * it will deliver this message, other wise the message is delayed until the next round.
  */
-public class Dummy_Adversary extends Adversary {
+public class Default_Adversary extends Adversary {
 
-    public Dummy_Adversary (int numOfPlayers, int numOfFaultyPlayers, int delay, int maxRound){
+    public Default_Adversary (int numOfPlayers, int numOfFaultyPlayers, int delay, int maxRound){
         super(numOfPlayers, numOfFaultyPlayers, delay, maxRound);
     }
 
