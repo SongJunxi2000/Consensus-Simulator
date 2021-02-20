@@ -1,6 +1,7 @@
 package Protocol;
 
 import Simulator.*;
+import Simulator.Message;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -47,7 +48,8 @@ public class Dolev_Strong_Adversary extends Adversary {
         ready_messages = new HashMap<Integer, LinkedList<Message>>();
         return temp;
     }
-    public void attack(){
+    @Override
+    public void attack(int round_number){
         if(faulty_players == null || faulty_players.size() == 0)
             return;
         Simulation_engine eng = faulty_players.getFirst().engine;

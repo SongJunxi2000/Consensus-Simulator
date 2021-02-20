@@ -44,7 +44,7 @@ public class Simulation_engine {
         honest_players = new LinkedList<>();
         players_output = new int[numOfPlayers];
 
-        adv = new Default_Adversary(numOfPlayers,numOfFaultyPlayers, delay, maxRound);
+        adv = new Majority_Vote_Adversary(numOfPlayers,numOfFaultyPlayers, delay, maxRound);
         sign = new Fsign();
         auth = new Fauth(adv,sign);
 
@@ -77,8 +77,8 @@ public class Simulation_engine {
             }
             players.put(key, player);
             players_key[i] = key;
-
         }
+        System.out.println(faulty_players_id.size());
         adv.setFaultyPlayers(faulty_players,faulty_players_id);
         auth.setAdKeys( players_key);
         sign.setKeys(players_key);
@@ -101,7 +101,7 @@ public class Simulation_engine {
             while(iterable_players.hasNext()){
                 iterable_players.next().action();
             }
-            adv.attack();
+            adv.attack(roundNumber);
 
         }
         for (int i : players_output)

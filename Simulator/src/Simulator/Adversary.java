@@ -55,7 +55,7 @@ public class Adversary {
     /**
      * Adversary's attack
      */
-    public void attack(){
-        //To overwrite in actual adversary
+    public void attack(int round_number){
+
     }
 }
